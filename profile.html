@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nguyen Duc Thang - UX/UI Designer Portfolio</title>
+    <meta name="description" content="Professional portfolio of Nguyen Duc Thang, UX/UI Designer based in Hanoi, Vietnam">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            /* Light theme colors */
+            --primary: #8b5cf6;
+            --primary-light: #c4b5fd;
+            --primary-gradient: linear-gradient(135deg, #8b5cf6, #a855f7, #c026d3);
+            --secondary: #f8fafc;
+            --accent: #06b6d4;
+            --text-primary: #1e293b;
+            --text-secondary: #64748b;
+            --text-muted: #94a3b8;
+            --background: #ffffff;
+            --surface: #f1f5f9;
+            --surface-elevated: #ffffff;
+            --border: #e2e8f0;
+            --shadow-light: 0 2px 8px rgba(139, 92, 246, 0.1);
+            --shadow-medium: 0 8px 32px rgba(139, 92, 246, 0.15);
+            --shadow-strong: 0 16px 64px rgba(139, 92, 246, 0.2);
+            --radius: 20px;
+            --radius-lg: 32px;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--background);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        /* Background decorations */
+        .bg-decoration {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .floating-shape {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0.3;
+            animation: float 8s ease-in-out infinite;
+        }
+
+        .shape-1 {
+            width: 300px;
+            height: 300px;
+            background: linear-gradient(135deg, #8b5cf6, #a855f7);
+            top: 5%;
+            right: 5%;
+            animation-delay: 0s;
+        }
+
+        .shape-2 {
+            width: 200px;
+            height: 200px;
+            background: linear-gradient(135deg, #c026d3, #06b6d4);
+            bottom: 10%;
+            left: 3%;
+            animation-delay: 3s;
+        }
+
+        .shape-3 {
+            width: 150px;
+            height: 150px;
+            background: linear-gradient(135deg, #06b6d4, #a855f7);
+            top: 50%;
+            right: 3%;
+            animation-delay: 6s;
+        }
+
+        @keyframes float {
+            0%, 100% { 
+                transform: translateY(0px) rotate(0deg) scale(1); 
+            }
+            33% { 
+                transform: translateY(-30px) rotate(3deg) scale(1.05); 
+            }
+            66% { 
+                transform: translateY(15px) rotate(-2deg) scale(0.95); 
+            }
+        }
+
+        /* Main layout */
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .left-column {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .right-column {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        /* About section */
+        .about-card {
+            background: var(--primary-gradient);
+            color: white;
+            padding: 2.5rem;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-medium);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .about-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: rotate 20s linear infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .about-card h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .about-text {
+            font-size: 1rem;
+            line-height: 1.6;
+            position: relative;
+            z-index: 2;
+        }
+
+        .about-text strong {
+            font-size: 1.2rem;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Profile section */
+        .profile-section {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 2rem;
+        }
+
+        .profile-container {
+            position: relative;
+            display: flex;
+            justify-content: center;
+        }
+
+        .profile-image {
+            width: 280px;
+            height: 380px;
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+            object-fit: cover;
+            border: 4px solid var(--accent);
+            box-shadow: var(--shadow-strong);
+            position: relative;
+            z-index: 2;
+        }
+
+        .profile-container::before {
+            content: '';
+            position: absolute;
+            width: 300px;
+            height: 400px;
+            background: linear-gradient(135deg, var(--accent), var(--primary));
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1;
+            opacity: 0.3;
+        }
+
+        .profile-decorations {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .decoration-line {
+            position: absolute;
+            width: 2px;
+            height: 100px;
+            background: var(--primary);
+            opacity: 0.6;
+        }
+
+        .line-1 {
+            top: 20%;
+            right: -30px;
+            transform: rotate(15deg);
+        }
+
+        .line-2 {
+            bottom: 30%;
+            left: -40px;
+            transform: rotate(-30deg);
+        }
+
+        /* Contact section */
+        .contact-card {
+            background: var(--surface-elevated);
+            padding: 2rem;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-light);
+            border: 1px solid var(--border);
+        }
+
+        .contact-card h2 {
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            color: var(--text-primary);
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem;
+            background: var(--surface);
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .contact-item:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-light);
+            border-color: var(--primary);
+        }
+
+        .contact-icon {
+            width: 18px;
+            height: 18px;
+            fill: var(--primary);
+        }
+
+        /* Skills grid */
+        .skills-section {
+            grid-column: 1 / -1;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+        }
+
+        .skill-card {
+            background: var(--surface-elevated);
+            padding: 2rem;
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow-light);
+            transition: all 0.3s ease;
+        }
+
+        .skill-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-medium);
+            border-color: var(--primary);
+        }
+
+        .skill-card h3 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            color: var(--text-primary);
+        }
+
+        /* Education specific */
+        .education-period {
+            display: inline-block;
+            background: var(--primary);
+            color: white;
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            margin-bottom: 0.75rem;
+            font-weight: 500;
+        }
+
+        .education-title {
+            font-weight: 500;
+            color: var(--text-secondary);
+        }
+
+        /* Soft skills */
+        .skill-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+        }
+
+        .skill-tag {
+            padding: 0.6rem 1.2rem;
+            background: var(--surface);
+            color: var(--text-primary);
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            border: 1px solid var(--border);
+            transition: all 0.2s ease;
+        }
+
+        .skill-tag:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-1px);
+        }
+
+        /* Technical skills */
+        .tech-skills {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 1rem;
+        }
+
+        .tech-icon {
+            aspect-ratio: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            font-weight: bold;
+            color: white;
+            font-size: 0.9rem;
+            text-align: center;
+            transition: transform 0.3s ease;
+            box-shadow: var(--shadow-light);
+        }
+
+        .tech-icon:hover {
+            transform: scale(1.05);
+        }
+
+        .figma { background: #f24e1e; }
+        .premiere { background: #9999ff; }
+        .after-effects { background: #9999ff; }
+        .illustrator { background: #ff9a00; }
+        .indesign { background: #ff3366; }
+        .photoshop { background: #31a8ff; }
+
+        /* Responsive design */
+        @media (max-width: 1024px) {
+            .portfolio-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .skills-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 1rem;
+            }
+
+            .about-card {
+                padding: 2rem;
+            }
+
+            .about-card h1 {
+                font-size: 2rem;
+            }
+
+            .profile-image {
+                width: 220px;
+                height: 300px;
+            }
+
+            .profile-container::before {
+                width: 240px;
+                height: 320px;
+            }
+
+            .skills-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .tech-skills {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        /* Smooth animations */
+        .portfolio-grid {
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Background decorations -->
+    <div class="bg-decoration">
+        <div class="floating-shape shape-1"></div>
+        <div class="floating-shape shape-2"></div>
+        <div class="floating-shape shape-3"></div>
+    </div>
+
+    <div class="container">
+        <div class="portfolio-grid">
+            <!-- Left Column -->
+            <div class="left-column">
+                <!-- About Section -->
+                <div class="about-card">
+                    <h1>About me</h1>
+                    <div class="about-text">
+                        <p><strong>Hi</strong></p>
+                        <p>My name is Nguyen Duc Thang.</p>
+                        <p>I am a UX/UI Designer based in Hanoi, Viet Nam with experience through projects and subjects in University.</p>
+                        <br>
+                        <p>My objective: Challenge myself in a new environment to learn, develop, improve my skills through different projects and contribute more to the company with my abilities.</p>
+                    </div>
+                </div>
+
+                <!-- Contact Section -->
+                <div class="contact-card">
+                    <h2>Contact</h2>
+                    <div class="contact-grid">
+                        <div class="contact-item">
+                            <svg class="contact-icon" viewBox="0 0 24 24">
+                                <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+                            </svg>
+                            <span>thangnguyenduc098@gmail.com</span>
+                        </div>
+                        <div class="contact-item">
+                            <svg class="contact-icon" viewBox="0 0 24 24">
+                                <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
+                            </svg>
+                            <span>0397 168 247</span>
+                        </div>
+                        <div class="contact-item">
+                            <svg class="contact-icon" viewBox="0 0 24 24">
+                                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                            </svg>
+                            <span>linkedin.com/in/thangnguynnc20</span>
+                        </div>
+                        <div class="contact-item">
+                            <svg class="contact-icon" viewBox="0 0 24 24">
+                                <path d="M22 7h-7v2h7v11c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h7v2H4v16h16V7z"/>
+                                <path d="M15 4V2l5 3-5 3V6h-4V4z"/>
+                            </svg>
+                            <span>behance.net/thangnguynnc20</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column -->
+            <div class="right-column">
+                <!-- Profile Section -->
+                <div class="profile-section">
+                    <div class="profile-container">
+                        <img src="data:image/jpeg;base64,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" alt="Nguyen Duc Thang - UX/UI Designer" class="profile-image">
+                        <div class="profile-decorations">
+                            <div class="decoration-line line-1"></div>
+                            <div class="decoration-line line-2"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Skills Section -->
+            <div class="skills-section">
+                <div class="skill-card" style="padding: 2.5rem;">
+                    <!-- Education -->
+                    <div style="margin-bottom: 2rem;">
+                        <h3>Education</h3>
+                        <div class="education-period">2020 - Now</div>
+                        <div class="education-title">FPT University - Graphic Design</div>
+                    </div>
+
+                    <!-- Soft Skills -->
+                    <div style="margin-bottom: 2rem;">
+                        <h3>Soft skill</h3>
+                        <div class="skill-list">
+                            <span class="skill-tag">Teamwork</span>
+                            <span class="skill-tag">Critical Thinking</span>
+                            <span class="skill-tag">Communication</span>
+                            <span class="skill-tag">Time Management</span>
+                        </div>
+                    </div>
+
+                    <!-- Technical Skills -->
+                    <div style="margin-bottom: 2rem;">
+                        <h3>Technical skill</h3>
+                        <div class="tech-skills">
+                            <div class="tech-icon figma">Figma</div>
+                            <div class="tech-icon premiere">Pr</div>
+                            <div class="tech-icon after-effects">Ae</div>
+                            <div class="tech-icon illustrator">Ai</div>
+                            <div class="tech-icon indesign">Id</div>
+                            <div class="tech-icon photoshop">Ps</div>
+                        </div>
+                    </div>
+
+                    <!-- Skill Set -->
+                    <div style="margin-bottom: 2rem;">
+                        <h3>Skill set</h3>
+                        <div class="skill-list">
+                            <span class="skill-tag">User research</span>
+                            <span class="skill-tag">Web Design</span>
+                            <span class="skill-tag">Wireframing</span>
+                            <span class="skill-tag">App Design</span>
+                            <span class="skill-tag">Brainstorming</span>
+                            <span class="skill-tag">Prototyping</span>
+                        </div>
+                    </div>
+
+                    <!-- Interest -->
+                    <div style="margin-bottom: 2rem;">
+                        <h3>Interest</h3>
+                        <div class="skill-list">
+                            <span class="skill-tag">Design Trends</span>
+                            <span class="skill-tag">Technology</span>
+                        </div>
+                    </div>
+
+                    <!-- Language -->
+                    <div>
+                        <h3>Language</h3>
+                        <div class="skill-list">
+                            <span class="skill-tag">Vietnamese</span>
+                            <span class="skill-tag">English (Pre-Intermediate)</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Add smooth interactions
+        document.addEventListener('DOMContentLoaded', function() {
+            // Skill cards hover effects
+            const skillCards = document.querySelectorAll('.skill-card');
+            
+            skillCards.forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-8px)';
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0)';
+                });
+            });
+
+            // Contact item interactions
+            const contactItems = document.querySelectorAll('.contact-item');
+            
+            contactItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    const text = this.querySelector('span').textContent;
+                    
+                    if (text.includes('@')) {
+                        navigator.clipboard.writeText(text).then(() => {
+                            // Visual feedback
+                            const original = this.style.background;
+                            this.style.background = 'var(--primary)';
+                            this.style.color = 'white';
+                            setTimeout(() => {
+                                this.style.background = original;
+                                this.style.color = '';
+                            }, 500);
+                        });
+                    }
+                });
+            });
+
+            // Intersection Observer for animations
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            });
+
+            skillCards.forEach(card => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(30px)';
+                card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                observer.observe(card);
+            });
+        });
+    </script>
+</body>
+</html>
