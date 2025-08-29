@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Interview Practice Platform</title>
+    
+    <style>
+        /* ================================ */
+        /* ===== GLOBAL & BODY STYLES ===== */
+        /* ================================ */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f5f7ff 0%, #ffffff 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        /* ================================ */
+        /* ===== LAYOUT & CONTAINER ===== */
+        /* ================================ */
+        .container {
+            display: flex;
+            max-width: 1400px;
+            margin: 0 auto;
+            min-height: 100vh;
+            gap: 20px;
+            padding: 20px;
+            align-items: stretch; 
+        }
+
+        .sidebar, .main-content, .quiz-section {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 4px 20px rgba(59, 130, 246, 0.1);
+        }
+
+        .sidebar {
+            flex: 1;
+            border-left: 4px solid #3b82f6;
+        }
+
+        .main-content {
+            flex: 2;
+            padding: 30px;
+        }
+
+        .quiz-section {
+            flex: 1;
+            border-right: 4px solid #3b82f6;
+        }
+
+        /* ================================ */
+        /* ===== TYPOGRAPHY ===== */
+        /* ================================ */
+        h1 {
+            color: #1e40af;
+            margin-bottom: 20px;
+            font-size: 24px;
+            font-weight: 600;
+        }
+
+        h2 {
+            color: #1e40af;
+            margin-bottom: 15px;
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        h3 {
+            color: #3b82f6;
+            margin-bottom: 12px;
+            font-size: 16px;
+            font-weight: 500;
+        }
+
+        .question-text {
+            font-size: 16px;
+            line-height: 1.5;
+            color: #374151;
+            margin-bottom: 15px;
+        }
+
+        .answer-text {
+            background: #f1f5f9;
+            border-left: 4px solid #3b82f6;
+            padding: 15px;
+            border-radius: 0 8px 8px 0;
+            font-size: 14px;
+            line-height: 1.6;
+            color: #475569;
+        }
+        
+        /* ================================ */
+        /* ===== COMPONENTS & CARDS ===== */
+        /* ================================ */
+        .section-label {
+            background: #e0f2fe;
+            color: #0369a1;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 500;
+            margin-bottom: 10px;
+            display: inline-block;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .question-card {
+            background: #f8faff;
+            border: 1px solid #e0f2fe;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 15px;
+        }
+
+        .stat-card {
+            background: #f0f9ff;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            border: 1px solid #e0f2fe;
+        }
+
+        .stat-number {
+            font-size: 24px;
+            font-weight: bold;
+            color: #1e40af;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: #64748b;
+            margin-top: 4px;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e0f2fe;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #3b82f6, #1d4ed8);
+            transition: width 0.5s ease;
+            width: 35%; /* Example width */
+        }
+        
+        /* ================================ */
+        /* ===== BUTTONS & INPUTS ===== */
+        /* ================================ */
+        .choice-buttons {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 15px;
+        }
+
+        .choice-btn {
+            background: white;
+            border: 2px solid #3b82f6;
+            color: #3b82f6;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .choice-btn:hover {
+            background: #3b82f6;
+            color: white;
+            transform: translateY(-1px);
+        }
+
+        .choice-btn.selected {
+            background: #3b82f6;
+            color: white;
+        }
+
+        .interview-controls {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+            align-items: center;
+        }
+
+        /* --- CONTROL BUTTON STYLES --- */
+        .control-btn {
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .control-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+        }
+
+        /* Start Button (Blue) */
+        #startBtn {
+            background-color: #3b82f6; 
+        }
+        #startBtn:hover {
+            background-color: #1d4ed8;
+        }
+
+        /* Pause Button (Yellow) */
+        #pauseBtn {
+            background-color: #ffc107;
+            color: #212529;
+        }
+        #pauseBtn:hover {
+            background-color: #e0a800;
+        }
+
+        /* Reset Button (Red) */
+        #resetBtn {
+            background-color: #dc3545;
+        }
+        #resetBtn:hover {
+            background-color: #c82333;
+        }
+        
+        .difficulty-selector {
+            margin-bottom: 20px;
+        }
+
+        .difficulty-btn {
+            background: white;
+            border: 2px solid #e0f2fe;
+            padding: 8px 16px;
+            margin: 0 5px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .difficulty-btn.active {
+            background: #3b82f6;
+            color: white;
+            border-color: #3b82f6;
+        }
+
+        .input-container {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .user-input {
+            flex: 1;
+            padding: 12px;
+            border: 2px solid #e0f2fe;
+            border-radius: 8px;
+            font-size: 14px;
+            outline: none;
+            transition: border-color 0.3s ease;
+        }
+
+        .user-input:focus {
+            border-color: #3b82f6;
+        }
+
+        .send-btn {
+            background: #3b82f6;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: background 0.3s ease;
+        }
+
+        .send-btn:hover {
+            background: #1d4ed8;
+        }
+
+        /* ================================ */
+        /* ===== CHAT & INTERVIEW ===== */
+        /* ================================ */
+        .ai-interview-section {
+            margin-top: 30px;
+            border-top: 2px solid #e0f2fe;
+            padding-top: 25px;
+        }
+        
+        .chat-container {
+            background: #f8faff;
+            border-radius: 10px;
+            padding: 20px;
+            max-height: 400px;
+            overflow-y: auto;
+            margin-bottom: 15px;
+            border: 1px solid #e0f2fe;
+        }
+
+        .chat-message {
+            margin-bottom: 15px;
+            padding: 12px;
+            border-radius: 8px;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .ai-message {
+            background: white;
+            border-left: 4px solid #3b82f6;
+            margin-right: 50px;
+        }
+
+        .user-message {
+            background: #dbeafe;
+            border-left: 4px solid #1e40af;
+            margin-left: 50px;
+        }
+
+        .typing-indicator {
+            display: none;
+            font-style: italic;
+            color: #64748b;
+            margin-bottom: 10px;
+        }
+
+        .typing-indicator.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* ================================ */
+        /* ===== NEW: TIPS SECTION ===== */
+        /* ================================ */
+        .interview-tips {
+            margin-top: 30px;
+            padding: 20px;
+            background: #f0f9ff;
+            border-radius: 8px;
+            border-left: 4px solid #10b981; /* Green accent for tips */
+        }
+
+        .interview-tips h3 {
+            color: #1e40af;
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+
+        .interview-tips ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .interview-tips li {
+            position: relative;
+            padding-left: 28px;
+            margin-bottom: 12px;
+            color: #374151;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .interview-tips li:last-child {
+            margin-bottom: 0;
+        }
+
+        .interview-tips li::before {
+            content: '💡';
+            position: absolute;
+            left: 0;
+            top: 0;
+            font-size: 16px;
+        }
+
+
+        /* ================================ */
+        /* ===== QUIZ SECTION ===== */
+        /* ================================ */
+        .quiz-question {
+            background: #f8faff;
+            border: 1px solid #e0f2fe;
+            border-radius: 8px;
+            padding: 18px;
+            margin-bottom: 15px;
+        }
+
+        .quiz-options {
+            margin-top: 12px;
+        }
+
+        .quiz-option {
+            display: block;
+            margin: 8px 0;
+            padding: 10px;
+            background: white;
+            border: 1px solid #e0f2fe;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .quiz-option:hover {
+            background: #f0f9ff;
+            border-color: #3b82f6;
+        }
+
+        .quiz-option input[type="radio"] {
+            margin-right: 8px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+
+        <aside class="sidebar">
+            <span class="section-label">Based on Interview</span>
+            <h1>Pre-screening Questions</h1>
+            
+            <div class="question-card">
+                <span class="section-label">Plain Text</span>
+                <h3>Question 1</h3>
+                <p class="question-text">
+                    Describe a situation where you had to collaborate with a difficult team member. How did you handle the communication?
+                </p>
+                <div class="answer-text">
+                    In a previous project, I worked with a team member who had a very different communication style... I approached this by having a one-on-one conversation...
+                </div>
+            </div>
+
+            <div class="question-card">
+                <span class="section-label">Multiple Choice</span>
+                <h3>Question 2</h3>
+                <p class="question-text">
+                    What is your primary focus in UI/UX design?
+                </p>
+                <div class="choice-buttons">
+                    <button class="choice-btn selected">User feedback</button>
+                    <button class="choice-btn">Personal preference</button>
+                    <button class="choice-btn">Latest trends</button>
+                    <button class="choice-btn">Business goals</button>
+                </div>
+            </div>
+
+            <div class="progress-bar">
+                <div class="progress-fill"></div>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number">12</div>
+                    <div class="stat-label">Questions Completed</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">85%</div>
+                    <div class="stat-label">Success Rate</div>
+                </div>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <span class="section-label">Based on Interview</span>
+            <h1>AI Mock Interview</h1>
+            
+            <div class="interview-controls">
+                <button class="control-btn" id="startBtn">▶️ Start Interview</button>
+                <button class="control-btn" id="pauseBtn">⏸️ Pause</button>
+                <button class="control-btn" id="resetBtn">🔄 Reset</button>
+                <span style="margin-left: auto; color: #64748b;">Duration: 03:45</span>
+            </div>
+
+            <div class="difficulty-selector">
+                <strong>Difficulty Level:</strong>
+                <button class="difficulty-btn" data-level="easy">Easy</button>
+                <button class="difficulty-btn active" data-level="medium">Medium</button>
+                <button class="difficulty-btn" data-level="hard">Hard</button>
+            </div>
+
+            <div class="chat-container" id="chatContainer">
+                <div class="chat-message ai-message">
+                    <strong>AI Interviewer:</strong> Hello! Welcome to your mock interview session...
+                </div>
+                <div class="chat-message user-message">
+                    <strong>You:</strong> Thank you for having me! I'm a passionate software developer...
+                </div>
+                <div class="chat-message ai-message">
+                    <strong>AI Interviewer:</strong> That's great! I can see your enthusiasm...
+                </div>
+                <div class="typing-indicator" id="typingIndicator">AI is thinking...</div>
+            </div>
+
+            <div class="input-container">
+                <input type="text" class="user-input" id="userInput" placeholder="Type your response here...">
+                <button class="send-btn" id="sendBtn">Send</button>
+            </div>
+
+            <div class="ai-interview-section">
+                <h2>Interview Analysis</h2>
+                <div class="stats-grid">
+                    <div class="stat-card"><div class="stat-number">7.8</div><div class="stat-label">Overall Score</div></div>
+                    <div class="stat-card"><div class="stat-number">92%</div><div class="stat-label">Confidence Level</div></div>
+                    <div class="stat-card"><div class="stat-number">1.2s</div><div class="stat-label">Avg Response Time</div></div>
+                    <div class="stat-card"><div class="stat-number">5</div><div class="stat-label">Questions Answered</div></div>
+                </div>
+                
+                <div class="interview-tips">
+                    <h3>Tips for Improvement</h3>
+                    <ul>
+                        <li>For behavioral questions, try using the STAR method (Situation, Task, Action, Result).</li>
+                        <li>Speak clearly and maintain a confident, steady pace.</li>
+                        <li>Keep your answers focused and directly related to the question.</li>
+                        <li>It's okay to take a moment to think before you answer a complex question.</li>
+                    </ul>
+                </div>
+            </div>
+        </main>
+
+        <aside class="quiz-section">
+            <span class="section-label">Knowledge Assessment</span>
+            <h1>Practice Quizzes</h1>
+            
+            <div class="quiz-question">
+                <h3>Technical Quiz - Question 3 of 10</h3>
+                <p class="question-text">What is the time complexity of binary search algorithm?</p>
+                <div class="quiz-options">
+                    <label class="quiz-option"><input type="radio" name="q1" value="a"> O(n)</label>
+                    <label class="quiz-option"><input type="radio" name="q1" value="b"> O(log n)</label>
+                    <label class="quiz-option"><input type="radio" name="q1" value="c"> O(n²)</label>
+                    <label class="quiz-option"><input type="radio" name="q1" value="d"> O(1)</label>
+                </div>
+                <button class="choice-btn" style="margin-top: 15px;">Submit</button>
+            </div>
+
+            <div class="quiz-question">
+                <h3>Behavioral Quiz - Question 1 of 5</h3>
+                <p class="question-text">How do you handle constructive criticism from your manager?</p>
+                <div class="quiz-options">
+                    <label class="quiz-option"><input type="radio" name="q2" value="a"> Listen actively and ask clarifying questions</label>
+                    <label class="quiz-option"><input type="radio" name="q2" value="b"> Defend your work immediately</label>
+                    <label class="quiz-option"><input type="radio" name="q2" value="c"> Ignore it and continue as before</label>
+                    <label class="quiz-option"><input type="radio" name="q2" value="d"> Take it personally</label>
+                </div>
+                <button class="choice-btn" style="margin-top: 15px;">Submit</button>
+            </div>
+             <div class="progress-bar">
+                <div class="progress-fill" style="width: 60%;"></div>
+            </div>
+        </aside>
+
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+
+            // ===== STATE VARIABLES =====
+            let isInterviewActive = false;
+            let currentDifficulty = 'medium';
+            const aiQuestions = {
+                easy: [
+                    "Tell me about yourself.",
+                    "Why do you want to work here?",
+                    "What are your strengths?"
+                ],
+                medium: [
+                    "Describe a challenging project you worked on.",
+                    "How do you handle tight deadlines?",
+                    "Walk me through your problem-solving process."
+                ],
+                hard: [
+                    "Design a system to handle 1 million concurrent users.",
+                    "How would you optimize a slow database query?",
+                    "Explain a complex technical concept to a non-technical person."
+                ]
+            };
+            const initialChatMessage = `
+                <div class="chat-message ai-message">
+                    <strong>AI Interviewer:</strong> Hello! Welcome to your mock interview session. Let's start with a simple question: Can you tell me about yourself?
+                </div>`;
+
+            // ===== DOM ELEMENTS =====
+            const startBtn = document.getElementById('startBtn');
+            const pauseBtn = document.getElementById('pauseBtn');
+            const resetBtn = document.getElementById('resetBtn');
+            const sendBtn = document.getElementById('sendBtn');
+            const userInput = document.getElementById('userInput');
+            const chatContainer = document.getElementById('chatContainer');
+            const typingIndicator = document.getElementById('typingIndicator');
+            const difficultyButtons = document.querySelectorAll('.difficulty-btn');
+            const choiceButtons = document.querySelectorAll('.sidebar .choice-btn');
+            const quizOptions = document.querySelectorAll('.quiz-option');
+
+            // ===== INTERVIEW LOGIC FUNCTIONS =====
+            const startInterview = () => {
+                isInterviewActive = true;
+                startBtn.textContent = '▶️ Resume Interview';
+                askAIQuestion();
+            };
+
+            const pauseInterview = () => {
+                isInterviewActive = false;
+            };
+
+            const resetInterview = () => {
+                isInterviewActive = false;
+                chatContainer.innerHTML = initialChatMessage + '<div class="typing-indicator" id="typingIndicator">AI is thinking...</div>';
+                startBtn.textContent = '▶️ Start Interview';
+            };
+            
+            const askAIQuestion = () => {
+                if (!isInterviewActive) return;
+                
+                const questions = aiQuestions[currentDifficulty];
+                const randomQuestion = questions[Math.floor(Math.random() * questions.length)];
+                
+                showTyping();
+                
+                setTimeout(() => {
+                    hideTyping();
+                    addAIMessage(randomQuestion);
+                }, 1500);
+            };
+
+            // ===== CHAT UI FUNCTIONS =====
+            const showTyping = () => typingIndicator.classList.add('active');
+            const hideTyping = () => typingIndicator.classList.remove('active');
+
+            const addMessageToChat = (message, sender) => {
+                const messageDiv = document.createElement('div');
+                messageDiv.className = `chat-message ${sender === 'ai' ? 'ai-message' : 'user-message'}`;
+                messageDiv.innerHTML = `<strong>${sender === 'ai' ? 'AI Interviewer' : 'You'}:</strong> ${message}`;
+                chatContainer.insertBefore(messageDiv, typingIndicator);
+                chatContainer.scrollTop = chatContainer.scrollHeight;
+            };
+
+            const addAIMessage = (message) => addMessageToChat(message, 'ai');
+            const addUserMessage = (message) => addMessageToChat(message, 'user');
+
+            const handleSendMessage = () => {
+                const message = userInput.value.trim();
+                if (message) {
+                    addUserMessage(message);
+                    userInput.value = '';
+                    if (isInterviewActive) {
+                        setTimeout(askAIQuestion, 2000);
+                    }
+                }
+            };
+
+            // ===== EVENT LISTENERS =====
+            startBtn.addEventListener('click', startInterview);
+            pauseBtn.addEventListener('click', pauseInterview);
+            resetBtn.addEventListener('click', resetInterview);
+            sendBtn.addEventListener('click', handleSendMessage);
+            userInput.addEventListener('keypress', (event) => {
+                if (event.key === 'Enter') {
+                    handleSendMessage();
+                }
+            });
+
+            difficultyButtons.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    difficultyButtons.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    currentDifficulty = btn.dataset.level;
+                });
+            });
+
+            choiceButtons.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    choiceButtons.forEach(b => b.classList.remove('selected'));
+                    btn.classList.add('selected');
+                });
+            });
+
+            quizOptions.forEach(option => {
+                option.addEventListener('click', () => {
+                    option.querySelector('input[type="radio"]').checked = true;
+                });
+            });
+        });
+    </script>
+</body>
+</html>
