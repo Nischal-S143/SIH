@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Partner Companies - InternHub</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            /* Colors */
+            --primary-color: #3b82f6;
+            --primary-hover: #2563eb;
+            --text-dark: #1e293b;
+            --text-light: #64748b;
+            --bg-light: #f8fafc;
+            --bg-card: white;
+            --border-color: #e2e8f0;
+            --success-color: #10b981;
+
+            /* Shadows & Transitions */
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+
+        /* Header (Consistent with other pages) */
+        .header {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-color);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-light);
+            font-weight: 500;
+            transition: color 0.2s;
+            position: relative;
+            padding-bottom: 5px;
+        }
+        
+        /* Active link style */
+        .nav-links a.active {
+            color: var(--primary-color);
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-color);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--primary-color);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after,
+        .nav-links a.active::after {
+            width: 100%;
+        }
+
+        .auth-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn {
+            padding: 0.5rem 1rem;
+            border-radius: 0.375rem;
+            font-weight: 500;
+            text-decoration: none;
+            transition: var(--transition);
+            cursor: pointer;
+            border: none;
+            font-size: 0.875rem;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .btn-outline {
+            border: 1px solid var(--primary-color);
+            color: var(--primary-color);
+            background: transparent;
+        }
+
+        .btn-outline:hover {
+            background: var(--primary-color);
+            color: var(--bg-card);
+        }
+
+        .btn-primary {
+            background: var(--primary-color);
+            color: var(--bg-card);
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-hover);
+        }
+
+        /* Main Content */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        /* New Styles for Companies Page */
+        .page-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .page-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-dark);
+        }
+
+        .page-header p {
+            font-size: 1.125rem;
+            color: var(--text-light);
+            max-width: 600px;
+            margin: 0 auto 1.5rem;
+        }
+        
+        .search-container {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        
+        .search-container input {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: 0.375rem;
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+        
+        .search-container input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+        }
+
+        .company-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .card {
+            background: var(--bg-card);
+            border-radius: 0.75rem;
+            padding: 2rem;
+            box-shadow: var(--shadow-md);
+            transition: var(--transition);
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .company-card {
+            display: flex;
+            flex-direction: column;
+            text-align: center;
+        }
+        
+        .company-card-header {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        
+        .company-logo-bg {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            color: var(--bg-card);
+        }
+        
+        .company-card h2 {
+            font-size: 1.25rem;
+            margin-bottom: 0.25rem;
+        }
+        
+        .company-card .industry {
+            color: var(--text-light);
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .company-stats {
+            display: flex;
+            justify-content: space-around;
+            text-align: center;
+            margin-bottom: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border-color);
+        }
+        
+        .stat-item .value {
+            font-weight: 600;
+            display: block;
+        }
+        
+        .stat-item .label {
+            font-size: 0.8rem;
+            color: var(--text-light);
+        }
+        
+        .company-card .btn {
+            margin-top: auto; /* Pushes button to the bottom */
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--bg-card);
+            border-top: 1px solid var(--border-color);
+            padding: 2rem 0;
+            text-align: center;
+            margin-top: 4rem;
+            color: var(--text-light);
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            .page-header h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="nav-container">
+            <div class="logo">InternHub</div>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#internships">Internships</a></li>
+                    <li><a href="company.html" class="active">Companies</a></li>
+                    <li><a href="#about">About</a></li>
+                </ul>
+            </nav>
+            <div class="auth-buttons">
+                <a href="#login" class="btn btn-outline">Login</a>
+                <a href="#signup" class="btn btn-primary">Sign Up</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="page-header">
+            <h1>Meet Our Partner Companies</h1>
+            <p>Discover top-tier companies offering exciting internship opportunities through InternHub.</p>
+            <div class="search-container">
+                <input type="text" placeholder="Search for a company, e.g., 'TechCorp'">
+                <button class="btn btn-primary">Search</button>
+            </div>
+        </div>
+
+        <div class="company-grid">
+            <div class="card company-card">
+                <div class="company-card-header">
+                    <div class="company-logo-bg" style="background-color: #3b82f6;">TC</div>
+                    <h2>TechCorp</h2>
+                    <p class="industry">Cloud Solutions & Enterprise Software</p>
+                </div>
+                <div class="company-stats">
+                    <div class="stat-item">
+                        <span class="value">Remote</span>
+                        <span class="label">Location</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="value">1000+</span>
+                        <span class="label">Employees</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="value" style="color: var(--success-color);">8</span>
+                        <span class="label">Openings</span>
+                    </div>
+                </div>
+                <a href="#" class="btn btn-outline">View Internships</a>
+            </div>
+
+            <div class="card company-card">
+                <div class="company-card-header">
+                    <div class="company-logo-bg" style="background-color: #ef4444;">DS</div>
+                    <h2>DesignStudio</h2>
+                    <p class="industry">UX/UI & Digital Branding</p>
+                </div>
+                <div class="company-stats">
+                    <div class="stat-item">
+                        <span class="value">New York</span>
+                        <span class="label">Location</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="value">50-100</span>
+                        <span class="label">Employees</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="value" style="color: var(--success-color);">4</span>
+                        <span class="label">Openings</span>
+                    </div>
+                </div>
+                <a href="#" class="btn btn-outline">View Internships</a>
+            </div>
+
+            <div class="card company-card">
+                <div class="company-card-header">
+                    <div class="company-logo-bg" style="background-color: #10b981;">DL</div>
+                    <h2>DataLabs</h2>
+                    <p class="industry">AI & Machine Learning</p>
+                </div>
+                <div class="company-stats">
+                    <div class="stat-item">
+                        <span class="value">San Francisco</span>
+                        <span class="label">Location</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="value">200+</span>
+                        <span class="label">Employees</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="value" style="color: var(--success-color);">6</span>
+                        <span class="label">Openings</span>
+                    </div>
+                </div>
+                <a href="#" class="btn btn-outline">View Internships</a>
+            </div>
+
+            <div class="card company-card">
+                <div class="company-card-header">
+                    <div class="company-logo-bg" style="background-color: #f59e0b;">GC</div>
+                    <h2>GrowthCo</h2>
+                    <p class="industry">Digital Marketing & SEO</p>
+                </div>
+                <div class="company-stats">
+                    <div class="stat-item">
+                        <span class="value">London</span>
+                        <span class="label">Location</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="value">75+</span>
+                        <span class="label">Employees</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="value" style="color: var(--success-color);">5</span>
+                        <span class="label">Openings</span>
+                    </div>
+                </div>
+                <a href="#" class="btn btn-outline">View Internships</a>
+            </div>
+
+            <div class="card company-card">
+                <div class="company-card-header">
+                    <div class="company-logo-bg" style="background-color: #6366f1;">IH</div>
+                    <h2>InnovateHub</h2>
+                    <p class="industry">Venture Capital & Startups</p>
+                </div>
+                <div class="company-stats">
+                    <div class="stat-item">
+                        <span class="value">Boston</span>
+                        <span class="label">Location</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="value">30+</span>
+                        <span class="label">Employees</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="value" style="color: var(--success-color);">2</span>
+                        <span class="label">Openings</span>
+                    </div>
+                </div>
+                <a href="#" class="btn btn-outline">View Internships</a>
+            </div>
+
+            <div class="card company-card">
+                <div class="company-card-header">
+                    <div class="company-logo-bg" style="background-color: #8b5cf6;">QL</div>
+                    <h2>QuantumLeap</h2>
+                    <p class="industry">Fintech & Blockchain</p>
+                </div>
+                <div class="company-stats">
+                    <div class="stat-item">
+                        <span class="value">Remote</span>
+                        <span class="label">Location</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="value">150+</span>
+                        <span class="label">Employees</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="value" style="color: var(--success-color);">7</span>
+                        <span class="label">Openings</span>
+                    </div>
+                </div>
+                <a href="#" class="btn btn-outline">View Internships</a>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 InternHub. All Rights Reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>

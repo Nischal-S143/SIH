@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Frontend Developer Intern - InternHub</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            /* Colors */
+            --primary-color: #3b82f6;
+            --primary-hover: #2563eb;
+            --text-dark: #1e293b;
+            --text-light: #64748b;
+            --bg-light: #f8fafc;
+            --bg-card: white;
+            --border-color: #e2e8f0;
+            --success-color: #10b981;
+            --warning-bg: #fef3c7;
+            --warning-border: #f59e0b;
+            --warning-text: #92400e;
+
+            /* Shadows & Transitions */
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+
+        /* Header */
+        .header {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-color);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-light);
+            font-weight: 500;
+            transition: color 0.2s;
+            position: relative;
+            padding-bottom: 5px;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-color);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--primary-color);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .auth-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn {
+            padding: 0.5rem 1rem;
+            border-radius: 0.375rem;
+            font-weight: 500;
+            text-decoration: none;
+            transition: var(--transition);
+            cursor: pointer;
+            border: none;
+            font-size: 0.875rem;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .btn-outline {
+            border: 1px solid var(--primary-color);
+            color: var(--primary-color);
+            background: transparent;
+        }
+
+        .btn-outline:hover {
+            background: var(--primary-color);
+            color: var(--bg-card);
+        }
+
+        .btn-primary {
+            background: var(--primary-color);
+            color: var(--bg-card);
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-hover);
+        }
+
+        /* Main Content */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--primary-color);
+            text-decoration: none;
+            margin-bottom: 2rem;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .back-button:hover {
+            color: var(--primary-hover);
+        }
+        
+        .back-button .arrow {
+            display: inline-block;
+            transition: transform 0.3s ease;
+        }
+        
+        .back-button:hover .arrow {
+            transform: translateX(-4px);
+        }
+
+        .internship-header {
+            background: var(--bg-card);
+            border-radius: 0.75rem;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow-md);
+            transition: var(--transition);
+        }
+
+        .internship-header:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .company-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .company-logo {
+            width: 60px;
+            height: 60px;
+            background: var(--primary-color);
+            border-radius: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--bg-card);
+            font-weight: bold;
+            font-size: 1.25rem;
+        }
+
+        .company-details h1 {
+            font-size: 1.875rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .company-name {
+            color: var(--text-light);
+            font-size: 1.125rem;
+        }
+
+        .job-meta {
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-light);
+        }
+
+        .meta-value {
+            color: var(--text-dark);
+            font-weight: 500;
+        }
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 2rem;
+        }
+
+        .main-content {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .card {
+            background: var(--bg-card);
+            border-radius: 0.75rem;
+            padding: 2rem;
+            box-shadow: var(--shadow-md);
+            transition: var(--transition);
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .card h2 {
+            margin-bottom: 1rem;
+            color: var(--text-dark);
+            font-size: 1.25rem;
+        }
+
+        .description p {
+            margin-bottom: 1rem;
+            color: var(--text-light);
+        }
+
+        .requirements ul,
+        .eligibility ul {
+            list-style: none;
+            margin-bottom: 1rem;
+        }
+
+        .requirements li,
+        .eligibility li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #f1f5f9;
+            color: var(--text-light);
+            position: relative;
+            padding-left: 1.5rem;
+        }
+
+        .requirements li:before,
+        .eligibility li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: var(--success-color);
+            font-weight: bold;
+        }
+
+        .requirements li:last-child,
+        .eligibility li:last-child {
+            border-bottom: none;
+        }
+
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            position: sticky;
+            top: 100px;
+        }
+
+        .apply-card {
+            text-align: center;
+        }
+
+        .salary {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--success-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .apply-button {
+            width: 100%;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            font-size: 1.125rem;
+        }
+
+        .upload-section {
+            margin-top: 1rem;
+        }
+
+        .file-upload {
+            border: 2px dashed #cbd5e1;
+            border-radius: 0.5rem;
+            padding: 2rem 1rem;
+            text-align: center;
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .file-upload:hover {
+            border-color: var(--primary-color);
+            background-color: #eff6ff;
+        }
+
+        .file-upload input {
+            display: none;
+        }
+
+        .deadline {
+            background: var(--warning-bg);
+            border: 1px solid var(--warning-border);
+            color: var(--warning-text);
+            padding: 1rem;
+            border-radius: 0.5rem;
+            text-align: center;
+            font-weight: 500;
+        }
+
+        .job-details {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        .detail-row:last-child {
+            border-bottom: none;
+        }
+
+        .detail-label {
+            color: var(--text-light);
+            font-weight: 500;
+        }
+
+        .detail-value {
+            color: var(--text-dark);
+            font-weight: 600;
+        }
+
+        @media (max-width: 768px) {
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+            .sidebar {
+                position: static;
+            }
+            .job-meta {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            .nav-links {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="nav-container">
+            <div class="logo">InternHub</div>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#internships">Internships</a></li>
+                    <li><a href="#companies">Companies</a></li>
+                    <li><a href="#about">About</a></li>
+                </ul>
+            </nav>
+            <div class="auth-buttons">
+                <a href="#login" class="btn btn-outline">Login</a>
+                <a href="#signup" class="btn btn-primary">Sign Up</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <a href="#back" class="back-button">
+            <span class="arrow">←</span> Back to Internships
+        </a>
+        <section class="internship-header">
+            <div class="company-info">
+                <div class="company-logo">TC</div>
+                <div class="company-details">
+                    <h1>Frontend Developer Intern</h1>
+                    <div class="company-name">TechCorp</div>
+                </div>
+            </div>
+            <div class="job-meta">
+                <div class="meta-item">
+                    <span>📍</span>
+                    <span class="meta-value">Remote</span>
+                </div>
+                <div class="meta-item">
+                    <span>⏰</span>
+                    <span class="meta-value">Full-time</span>
+                </div>
+                <div class="meta-item">
+                    <span>📅</span>
+                    <span class="meta-value">3 months</span>
+                </div>
+                <div class="meta-item">
+                    <span>👥</span>
+                    <span class="meta-value">5 positions</span>
+                </div>
+            </div>
+        </section>
+
+        <div class="content-grid">
+            <div class="main-content">
+                <article class="card">
+                    <h2>Job Description</h2>
+                    <div class="description">
+                        <p>Join our frontend team to build amazing user interfaces using React, TypeScript, and modern web technologies. You'll work alongside experienced developers to create responsive, user-friendly applications that serve millions of users.</p>
+                        <p>This internship offers hands-on experience with cutting-edge technologies, mentorship from senior developers, and the opportunity to contribute to real-world projects that make a difference.</p>
+                        <p>You'll be involved in the entire development lifecycle, from planning and design to implementation and testing. This is a perfect opportunity to kickstart your career in frontend development.</p>
+                    </div>
+                </article>
+                <article class="card">
+                    <h2>Requirements</h2>
+                    <div class="requirements">
+                        <ul>
+                            <li>Proficiency in JavaScript, HTML, and CSS</li>
+                            <li>Experience with React or similar frontend frameworks</li>
+                            <li>Knowledge of TypeScript (preferred)</li>
+                            <li>Understanding of responsive web design principles</li>
+                            <li>Familiarity with Git version control</li>
+                            <li>Strong problem-solving skills</li>
+                            <li>Excellent communication and teamwork abilities</li>
+                            <li>Portfolio of personal projects or previous work</li>
+                        </ul>
+                    </div>
+                </article>
+                <article class="card">
+                    <h2>Eligibility Criteria</h2>
+                    <div class="eligibility">
+                        <ul>
+                            <li>Currently enrolled in Computer Science, Web Development, or related field</li>
+                            <li>Minimum GPA of 3.0 or equivalent</li>
+                            <li>Available for full-time commitment (40 hours/week)</li>
+                            <li>Must be legally authorized to work in the location</li>
+                            <li>Strong English communication skills</li>
+                            <li>Passion for learning and technology</li>
+                            <li>Previous internship experience is a plus but not required</li>
+                        </ul>
+                    </div>
+                </article>
+            </div>
+
+            <aside class="sidebar">
+                <div class="card apply-card">
+                    <div class="salary">$2000/month</div>
+                    <p style="color: #64748b; margin-bottom: 1.5rem;">Competitive stipend</p>
+                    <button class="btn btn-primary apply-button" onclick="showApplyForm()">Apply Now</button>
+                    <div class="upload-section" id="uploadSection" style="display: none;">
+                        <h3 style="margin-bottom: 1rem; color: #1e293b;">Upload Resume</h3>
+                        <div class="file-upload" onclick="document.getElementById('resume').click()">
+                            <input type="file" id="resume" accept=".pdf,.doc,.docx" onchange="handleFileUpload(this)">
+                            <div id="uploadText">
+                                <div style="font-size: 2rem; margin-bottom: 0.5rem;">📄</div>
+                                <div>Click to upload resume</div>
+                                <div style="font-size: 0.875rem; color: #64748b;">PDF, DOC, DOCX (Max 5MB)</div>
+                            </div>
+                        </div>
+                        <button class="btn btn-primary apply-button" onclick="submitApplication()" style="margin-top: 1rem;">Submit Application</button>
+                    </div>
+                </div>
+                <div class="deadline">
+                    ⏰ Application deadline: October 15, 2025
+                </div>
+                <div class="card">
+                    <h2>Job Details</h2>
+                    <div class="job-details">
+                        <div class="detail-row">
+                            <span class="detail-label">Industry</span>
+                            <span class="detail-value">Technology</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Department</span>
+                            <span class="detail-value">Engineering</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Experience Level</span>
+                            <span class="detail-value">Entry Level</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Start Date</span>
+                            <span class="detail-value">November 1, 2025</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Application ID</span>
+                            <span class="detail-value">#INT-2025-001</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <h2>About TechCorp</h2>
+                    <p style="margin-bottom: 1.5rem; color: var(--text-light); font-size: 0.9rem;">
+                        TechCorp is a leading innovator in cloud solutions and enterprise software, dedicated to helping businesses scale and succeed in the digital age.
+                    </p>
+                    <div class="job-details">
+                        <div class="detail-row">
+                            <span class="detail-label">Company Size</span>
+                            <span class="detail-value">1,000+ employees</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Headquarters</span>
+                            <span class="detail-value">San Francisco, CA</span>
+                        </div>
+                    </div>
+                    <a href="#" class="btn btn-outline" style="width: 100%; text-align: center; margin-top: 1.5rem;">Visit Website</a>
+                </div>
+            </aside>
+        </div>
+    </main>
+
+    <script>
+        function showApplyForm() {
+            document.getElementById('uploadSection').style.display = 'block';
+            event.target.style.display = 'none';
+        }
+
+        function handleFileUpload(input) {
+            const file = input.files[0];
+            if (file) {
+                const uploadText = document.getElementById('uploadText');
+                uploadText.innerHTML = `
+                    <div style="font-size: 2rem; margin-bottom: 0.5rem;">✓</div>
+                    <div style="color: #10b981; font-weight: 500;">${file.name}</div>
+                    <div style="font-size: 0.875rem; color: #64748b;">Click to change file</div>
+                `;
+            }
+        }
+
+        function submitApplication() {
+            const resume = document.getElementById('resume').files[0];
+            if (!resume) {
+                alert('Please upload your resume first.');
+                return;
+            }
+            // Simulate application submission
+            alert('Application submitted successfully! You will receive a confirmation email shortly.');
+            // Reset form
+            document.getElementById('uploadSection').style.display = 'none';
+            document.querySelector('.apply-button').style.display = 'block';
+            document.getElementById('uploadText').innerHTML = `
+                <div style="font-size: 2rem; margin-bottom: 0.5rem;">📄</div>
+                <div>Click to upload resume</div>
+                <div style="font-size: 0.875rem; color: #64748b;">PDF, DOC, DOCX (Max 5MB)</div>
+            `;
+        }
+    </script>
+</body>
+</html>
