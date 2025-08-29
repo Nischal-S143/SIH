@@ -3,8 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>InternHub - Find Your Dream Internship</title>
+    <title>Lumo - Internships | Jobs | Trainings</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"/>
+
     <style>
+        /* FIX: Dono <style> blocks ko ek mein merge kar diya hai for consistency */
+
+        /* General Styling & Variables */
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap');
+
+        :root {
+            --primary-blue: #007BFF;
+            --dark-text: #2c3e50; /* Using a slightly softer dark color */
+            --light-text: #555;
+            --bg-color: #FFFFFF;
+            --light-gray: #f4f7f6; /* Consistent light gray */
+            --border-color: #dcdcdc;
+            --yellow-tag: #FFD700;
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -12,10 +31,9 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background-color: #fafafa;
-            color: #333;
-            line-height: 1.6;
+            font-family: 'Poppins', sans-serif; /* Using one primary font */
+            background-color: var(--bg-color); /* Start with a white background */
+            color: var(--dark-text);
         }
 
         .container {
@@ -24,10 +42,11 @@
             padding: 0 20px;
         }
 
-        /* Header */
-        header {
-            background: white;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        /* Header & Navigation */
+        header.main-header { /* Renamed to avoid conflict */
+            background-color: var(--bg-color);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            padding: 15px 0;
             position: sticky;
             top: 0;
             z-index: 100;
@@ -37,529 +56,655 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 1rem 0;
+        }
+
+        .nav-left, .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
         }
 
         .logo {
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: #2563eb;
-        }
-
-        .nav-links {
-            display: flex;
-            list-style: none;
-            gap: 2rem;
-        }
-
-        .nav-links a {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--primary-blue);
             text-decoration: none;
-            color: #333;
-            font-weight: 500;
-            transition: color 0.3s;
         }
-
-        .nav-links a:hover {
-            color: #2563eb;
-        }
-
-        .auth-buttons {
-            display: flex;
-            gap: 1rem;
-        }
-
-        .btn {
-            padding: 0.5rem 1rem;
+        
+        .nav-right button {
+            padding: 8px 16px;
             border-radius: 6px;
-            text-decoration: none;
-            font-weight: 500;
-            transition: all 0.3s;
-            border: none;
-            cursor: pointer;
-        }
-
-        .btn-outline {
-            border: 1px solid #2563eb;
-            color: #2563eb;
-            background: transparent;
-        }
-
-        .btn-outline:hover {
-            background: #2563eb;
-            color: white;
-        }
-
-        .btn-primary {
-            background: #2563eb;
-            color: white;
-        }
-
-        .btn-primary:hover {
-            background: #1d4ed8;
-        }
-
-        /* Main Content */
-        main {
-            display: flex;
-            gap: 2rem;
-            padding: 2rem 0;
-        }
-
-        /* Sidebar */
-        .sidebar {
-            width: 300px;
-            background: white;
-            border-radius: 12px;
-            padding: 1.5rem;
-            height: fit-content;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-        }
-
-        .filter-section {
-            margin-bottom: 2rem;
-        }
-
-        .filter-title {
+            font-size: 14px;
             font-weight: 600;
-            margin-bottom: 1rem;
-            color: #374151;
+            cursor: pointer;
+            transition: all 0.3s;
         }
 
-        .filter-group {
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
+        .btn-login {
+            background-color: var(--primary-blue);
+            color: white;
+            border: none;
+        }
+        .btn-login:hover {
+            opacity: 0.9;
         }
 
-        .filter-item {
+        /* Hero Section */
+        .hero-section {
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            justify-content: space-between;
+            padding: 80px 20px;
+            background-color: var(--bg-color);
+            min-height: 90vh;
         }
 
-        .filter-item input[type="checkbox"] {
-            width: 16px;
-            height: 16px;
+        .hero-text {
+            max-width: 500px;
         }
 
-        .filter-item label {
-            font-size: 0.9rem;
-            color: #6b7280;
+        .hero-text h1 {
+            font-size: 52px;
+            color: var(--dark-text);
+            line-height: 1.2;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .hero-text p {
+            font-size: 18px;
+            color: var(--light-text);
+            margin: 20px 0 30px;
+        }
+
+        .hero-buttons button {
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
             cursor: pointer;
+            margin-right: 15px;
+            transition: all 0.3s;
         }
 
-        .search-box {
-            width: 100%;
-            padding: 0.75rem;
-            border: 1px solid #d1d5db;
-            border-radius: 6px;
-            font-size: 0.9rem;
-            margin-bottom: 1rem;
+        .btn-find {
+            background-color: var(--primary-blue);
+            color: white;
+            border: none;
         }
 
-        /* Content Area */
-        .content {
-            flex: 1;
+        .btn-post {
+            background: none;
+            border: 2px solid var(--primary-blue);
+            color: var(--primary-blue);
+        }
+
+        .btn-find:hover {
+            opacity: 0.9;
+        }
+
+        .btn-post:hover {
+            background-color: var(--primary-blue);
+            color: white;
+        }
+
+        .hero-image {
+             max-width: 550px;
+        }
+        
+        .hero-image img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        /* How It Works Section */
+        .how-it-works-section {
+            background-color: var(--light-gray);
+            padding: 60px 0;
         }
 
         .header-section {
-            background: white;
-            border-radius: 12px;
-            padding: 2rem;
-            margin-bottom: 2rem;
             text-align: center;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            padding-bottom: 50px;
         }
 
         .header-section h1 {
-            font-size: 2.5rem;
-            font-weight: bold;
-            color: #1f2937;
-            margin-bottom: 1rem;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2.8em;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: var(--dark-text);
         }
 
         .header-section p {
-            font-size: 1.1rem;
-            color: #6b7280;
-            max-width: 600px;
+            font-size: 1.1em;
+            color: var(--light-text);
+        }
+
+        .timeline-container {
+            position: relative;
+            width: 100%;
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 50px 0;
+            overflow: hidden;
+        }
+        
+        .timeline-svg-path {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            height: 100%;
+            width: 80px;
+            z-index: 0;
+        }
+        
+        .timeline-item {
+            position: relative;
+            width: calc(50% - 40px);
+            z-index: 1;
+            margin-bottom: 50px; /* Added margin for spacing */
+        }
+        
+        .timeline-item:nth-child(even) {
+            margin-left: calc(50% + 40px);
+        }
+        
+        .timeline-item .step-info {
+            background-color: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+
+        .timeline-item h3 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.6em;
+            color: var(--primary-blue);
+            margin-bottom: 10px;
+        }
+
+        .timeline-item p {
+            font-size: 1em;
+            color: var(--light-text);
+            line-height: 1.6;
+        }
+
+        .timeline-dot {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 20px;
+            height: 20px;
+            background-color: var(--primary-blue);
+            border: 4px solid var(--light-gray); /* Match with section background */
+            border-radius: 50%;
+            z-index: 2;
+            box-shadow: 0 0 0 4px var(--primary-blue);
+        }
+        
+        /* Adjusted dot positions for better alignment */
+        .dot-1 { top: 5%; }
+        .dot-2 { top: 30%; }
+        .dot-3 { top: 55%; }
+        .dot-4 { top: 80%; }
+
+        /* Awesome Features (Cards Slideshow) Section */
+        .features {
+            background: linear-gradient(135deg, #fceaff, #e0f7fa);
+            padding: 80px 0;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        .header-section {
+             text-align: center;
+             margin-bottom: 50px;
+        }
+
+        .header-section h1 {
+            color: var(--dark-text);
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2.8em;
+            margin-bottom: 15px;
+        }
+
+        .header-section p {
+            font-size: 1.1em;
+            color: var(--light-text);
+            max-width: 700px;
             margin: 0 auto;
         }
 
-        .stats {
+        .cards-carousel-container {
+            position: relative;
+            width: 100%;
             display: flex;
             justify-content: center;
-            gap: 3rem;
-            margin-top: 2rem;
+            align-items: center;
+            padding: 40px 0;
+            perspective: 1000px;
         }
 
-        .stat-item {
-            text-align: center;
+        .cards-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            width: 100%;
+            height: 400px;
         }
 
-        .stat-number {
-            font-size: 2rem;
-            font-weight: bold;
-            color: #2563eb;
-        }
-
-        .stat-label {
-            color: #6b7280;
-            font-size: 0.9rem;
-        }
-
-        /* Internship Cards */
-        .internships-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-            gap: 1.5rem;
-        }
-
-        .internship-card {
-            background: white;
-            border-radius: 12px;
-            padding: 1.5rem;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-            transition: transform 0.3s, box-shadow 0.3s;
+        .feature-card {
+            position: absolute;
+            width: 300px;
+            height: 380px;
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            text-align: left;
+            transition: all 0.5s ease-in-out;
+            opacity: 0;
             cursor: pointer;
+            pointer-events: none;
         }
 
-        .internship-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
-        }
-
-        .card-header {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            margin-bottom: 1rem;
-        }
-
-        .company-logo {
-            width: 50px;
-            height: 50px;
-            border-radius: 8px;
-            background: #f3f4f6;
+        .feature-card .icon-box {
+            width: 60px;
+            height: 60px;
+            border-radius: 15px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-weight: bold;
-            color: #2563eb;
+            margin-bottom: 25px;
+            color: white;
+            font-size: 24px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        .icon-box.blue-bg { background-color: #007BFF; }
+        .icon-box.red-bg { background-color: #e74c3c; }
+        .icon-box.green-bg { background-color: #27ae60; }
+        .icon-box.purple-bg { background-color: #8e44ad; }
+        .icon-box.orange-bg { background-color: #f39c12; }
+        .icon-box.darkblue-bg { background-color: #34495e; }
+        .icon-box.teal-bg { background-color: #1abc9c; }
+        .icon-box.brown-bg { background-color: #a0522d; }
+
+        .feature-card h3 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.4em;
+            color: var(--dark-text);
+            margin-bottom: 15px;
         }
 
-        .card-info h3 {
-            font-size: 1.1rem;
+        .feature-card p {
+            font-size: 0.95em;
+            color: var(--light-text);
+            line-height: 1.6;
+            margin-bottom: 20px;
+            height: 75px;
+            overflow: hidden;
+        }
+
+        .feature-card .read-more {
+            color: var(--primary-blue);
+            text-decoration: none;
             font-weight: 600;
-            color: #1f2937;
-            margin-bottom: 0.25rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            transition: color 0.3s;
         }
 
-        .company-name {
-            color: #6b7280;
-            font-size: 0.9rem;
+        .feature-card .read-more:hover {
+            color: #0056b3;
+        }
+        
+        .feature-card .read-more i {
+            transition: transform 0.3s;
         }
 
-        .card-details {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-            margin-bottom: 1rem;
+        .feature-card .read-more:hover i {
+            transform: translateX(5px);
         }
 
-        .detail-tag {
-            background: #f3f4f6;
-            color: #374151;
-            padding: 0.25rem 0.5rem;
-            border-radius: 4px;
-            font-size: 0.8rem;
+        .feature-card.card-active {
+            transform: translateX(0) scale(1.1);
+            opacity: 1;
+            z-index: 10;
+            pointer-events: auto;
         }
 
-        .card-description {
-            color: #6b7280;
-            font-size: 0.9rem;
-            line-height: 1.5;
-            margin-bottom: 1rem;
+        .feature-card.card-prev {
+            transform: translateX(-150%) scale(0.8);
+            opacity: 0.6;
+            z-index: 5;
+            pointer-events: auto;
         }
 
-        .card-footer {
+        .feature-card.card-next {
+            transform: translateX(150%) scale(0.8);
+            opacity: 0.6;
+            z-index: 5;
+            pointer-events: auto;
+        }
+
+        .carousel-controls {
+            position: absolute;
+            width: 100%;
             display: flex;
             justify-content: space-between;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 20;
+            padding: 0 10px;
+        }
+
+        .carousel-control-btn {
+            background-color: rgba(0, 0, 0, 0.4);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            font-size: 20px;
+            display: flex;
             align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
         }
 
-        .salary {
-            font-weight: 600;
-            color: #059669;
+        .carousel-control-btn:hover {
+            background-color: rgba(0, 0, 0, 0.6);
         }
 
-        .posted-date {
-            color: #9ca3af;
-            font-size: 0.8rem;
-        }
-
-        /* Responsive */
+        /* Responsiveness */
         @media (max-width: 768px) {
-            main {
-                flex-direction: column;
+            .hero-section {
+                flex-direction: column-reverse;
+                text-align: center;
+                padding: 40px 20px;
+            }
+            .hero-image img {
+                max-width: 300px;
+                margin-bottom: 40px;
+            }
+            .hero-text h1 {
+                font-size: 36px;
             }
 
-            .sidebar {
-                width: 100%;
-            }
-
-            .nav-links {
+            /* Timeline Mobile View */
+            .timeline-svg-path {
                 display: none;
             }
-
-            .header-section h1 {
-                font-size: 2rem;
+            .timeline-container::before {
+                content: '';
+                position: absolute;
+                left: 20px;
+                top: 0;
+                width: 3px;
+                height: 100%;
+                background-color: var(--border-color);
             }
-
-            .stats {
-                gap: 1.5rem;
+            .timeline-item, .timeline-item:nth-child(even) {
+                width: calc(100% - 50px);
+                margin-left: 50px;
+                margin-bottom: 50px;
             }
-
-            .internships-grid {
-                grid-template-columns: 1fr;
+            .timeline-dot {
+                left: 20px;
             }
         }
     </style>
 </head>
+
 <body>
-    <header>
+
+    <header class="main-header">
         <nav class="container">
-            <div class="logo">InternHub</div>
-            <ul class="nav-links">
-                <li><a href="#home">Home</a></li>
-                <li><a href="#internships">Internships</a></li>
-                <li><a href="#companies">Companies</a></li>
-                <li><a href="#about">About</a></li>
-            </ul>
-            <div class="auth-buttons">
-                <a href="#login" class="btn btn-outline">Login</a>
-                <a href="#signup" class="btn btn-primary">Sign Up</a>
+            <div class="nav-left">
+                <a href="#" class="logo">Lumo</a>
+            </div>
+            <div class="nav-right">
+                <button class="btn-login">Login</button>
             </div>
         </nav>
     </header>
 
-    <div class="container">
-        <main>
-            <aside class="sidebar">
-                <div class="filter-section">
-                    <input type="text" class="search-box" placeholder="Search internships...">
-                </div>
-
-                <div class="filter-section">
-                    <h3 class="filter-title">Location</h3>
-                    <div class="filter-group">
-                        <div class="filter-item">
-                            <input type="checkbox" id="remote">
-                            <label for="remote">Remote (45)</label>
-                        </div>
-                        <div class="filter-item">
-                            <input type="checkbox" id="new-york">
-                            <label for="new-york">New York (23)</label>
-                        </div>
-                        <div class="filter-item">
-                            <input type="checkbox" id="san-francisco">
-                            <label for="san-francisco">San Francisco (18)</label>
-                        </div>
-                        <div class="filter-item">
-                            <input type="checkbox" id="london">
-                            <label for="london">London (12)</label>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="filter-section">
-                    <h3 class="filter-title">Department</h3>
-                    <div class="filter-group">
-                        <div class="filter-item">
-                            <input type="checkbox" id="engineering">
-                            <label for="engineering">Engineering (32)</label>
-                        </div>
-                        <div class="filter-item">
-                            <input type="checkbox" id="design">
-                            <label for="design">Design (18)</label>
-                        </div>
-                        <div class="filter-item">
-                            <input type="checkbox" id="marketing">
-                            <label for="marketing">Marketing (24)</label>
-                        </div>
-                        <div class="filter-item">
-                            <input type="checkbox" id="sales">
-                            <label for="sales">Sales (15)</label>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="filter-section">
-                    <h3 class="filter-title">Duration</h3>
-                    <div class="filter-group">
-                        <div class="filter-item">
-                            <input type="checkbox" id="3-months">
-                            <label for="3-months">3 Months</label>
-                        </div>
-                        <div class="filter-item">
-                            <input type="checkbox" id="6-months">
-                            <label for="6-months">6 Months</label>
-                        </div>
-                        <div class="filter-item">
-                            <input type="checkbox" id="12-months">
-                            <label for="12-months">12 Months</label>
-                        </div>
-                    </div>
-                </div>
-            </aside>
-
-            <div class="content">
-                <section class="header-section">
-                    <h1>Find Your Dream Internship</h1>
-                    <p>Discover amazing internship opportunities from top companies worldwide. Start your career journey today!</p>
-                    <div class="stats">
-                        <div class="stat-item">
-                            <div class="stat-number">500+</div>
-                            <div class="stat-label">Active Internships</div>
-                        </div>
-                        <div class="stat-item">
-                            <div class="stat-number">200+</div>
-                            <div class="stat-label">Partner Companies</div>
-                        </div>
-                        <div class="stat-item">
-                            <div class="stat-number">95%</div>
-                            <div class="stat-label">Success Rate</div>
-                        </div>
-                    </div>
-                </section>
-
-                <div class="internships-grid" id="internships-grid">
-                    <!-- Internship cards will be dynamically generated -->
+    <main>
+        <section class="hero-section container">
+            <div class="hero-text">
+                <h1>Your future starts here</h1>
+                <p>25,000+ Internships for freshers, students & graduates!</p>
+                <div class="hero-buttons">
+                    <button class="btn-find">Find Internships</button>
+                    <button class="btn-post">+ Post Internships</button>
                 </div>
             </div>
-        </main>
-    </div>
+            <div class="hero-image">
+                <img src="https://d8it4huxumps7.cloudfront.net/uploads/images/676e5f765e786_internship_portal.png?d=1000x600" alt="Student with books">
+            </div>
+        </section>
 
-    <script>
-        // Sample internship data
-        const internships = [
-            {
-                title: "Frontend Developer Intern",
-                company: "TechCorp",
-                logo: "TC",
-                location: "Remote",
-                type: "Full-time",
-                duration: "3 months",
-                salary: "$2000/month",
-                description: "Join our frontend team to build amazing user interfaces using React, TypeScript, and modern web technologies.",
-                postedDate: "2 days ago"
-            },
-            {
-                title: "UX Design Intern",
-                company: "DesignStudio",
-                logo: "DS",
-                location: "New York",
-                type: "Part-time",
-                duration: "6 months",
-                salary: "$1800/month",
-                description: "Work with our design team to create user-centered designs for web and mobile applications.",
-                postedDate: "1 week ago"
-            },
-            {
-                title: "Data Science Intern",
-                company: "DataLabs",
-                logo: "DL",
-                location: "San Francisco",
-                type: "Full-time",
-                duration: "4 months",
-                salary: "$2500/month",
-                description: "Analyze large datasets and build machine learning models to drive business insights.",
-                postedDate: "3 days ago"
-            },
-            {
-                title: "Marketing Intern",
-                company: "GrowthCo",
-                logo: "GC",
-                location: "London",
-                type: "Part-time",
-                duration: "3 months",
-                salary: "$1500/month",
-                description: "Support our marketing campaigns and learn digital marketing strategies from industry experts.",
-                postedDate: "5 days ago"
-            },
-            {
-                title: "Backend Developer Intern",
-                company: "ServerTech",
-                logo: "ST",
-                location: "Remote",
-                type: "Full-time",
-                duration: "6 months",
-                salary: "$2200/month",
-                description: "Build scalable backend systems using Node.js, Python, and cloud technologies.",
-                postedDate: "1 day ago"
-            },
-            {
-                title: "Product Management Intern",
-                company: "InnovateLab",
-                logo: "IL",
-                location: "Boston",
-                type: "Full-time",
-                duration: "4 months",
-                salary: "$2000/month",
-                description: "Learn product management fundamentals and work on exciting product features.",
-                postedDate: "1 week ago"
-            }
-        ];
+        <section class="how-it-works-section">
+            <div class="header-section">
+                <div class="container">
+                    <h1>How Lumo Works</h1>
+                    <p>Your Path to the Perfect Internship, Simplified.</p>
+                </div>
+            </div>
 
-        // Function to create internship card HTML
-        function createInternshipCard(internship) {
-            return `
-                <div class="internship-card">
-                    <div class="card-header">
-                        <div class="company-logo">${internship.logo}</div>
-                        <div class="card-info">
-                            <h3>${internship.title}</h3>
-                            <div class="company-name">${internship.company}</div>
-                        </div>
-                    </div>
-                    <div class="card-details">
-                        <span class="detail-tag">${internship.location}</span>
-                        <span class="detail-tag">${internship.type}</span>
-                        <span class="detail-tag">${internship.duration}</span>
-                    </div>
-                    <p class="card-description">${internship.description}</p>
-                    <div class="card-footer">
-                        <span class="salary">${internship.salary}</span>
-                        <span class="posted-date">${internship.postedDate}</span>
+            <div class="timeline-container">
+                <svg class="timeline-svg-path" viewbox="0 0 80 1400" preserveAspectRatio="none">
+                    <path d="M 40,0
+                             C 80,150 0,250 40,350
+                             C 80,450 0,550 40,700
+                             C 80,850 0,950 40,1050
+                             C 80,1200 0,1300 40,1400"
+                          stroke="#dcdcdc" stroke-width="3" fill="none" />
+                </svg>
+
+                <div class="timeline-dot dot-1"></div>
+                <div class="timeline-dot dot-2"></div>
+                <div class="timeline-dot dot-3"></div>
+                <div class="timeline-dot dot-4"></div>
+
+                <div class="timeline-item">
+                    <div class="step-info">
+                        <h3>1. Upload Your Resume</h3>
+                        <p>Start your journey by uploading your latest resume. We accept common formats like PDF and DOCX for a quick and easy start.</p>
                     </div>
                 </div>
-            `;
-        }
 
-        // Function to render internships
-        function renderInternships(internshipsToRender = internships) {
-            const grid = document.getElementById('internships-grid');
-            grid.innerHTML = internshipsToRender.map(createInternshipCard).join('');
-        }
+                <div class="timeline-item">
+                    <div class="step-info">
+                        <h3>2. AI Parsing & Analysis</h3>
+                        <p>Our advanced AI analyzes your resume, intelligently identifying your key skills, experiences, and qualifications to build your profile.</p>
+                    </div>
+                </div>
 
-        // Search functionality
-        function setupSearch() {
-            const searchBox = document.querySelector('.search-box');
-            searchBox.addEventListener('input', (e) => {
-                const searchTerm = e.target.value.toLowerCase();
-                const filteredInternships = internships.filter(internship => 
-                    internship.title.toLowerCase().includes(searchTerm) ||
-                    internship.company.toLowerCase().includes(searchTerm) ||
-                    internship.description.toLowerCase().includes(searchTerm)
-                );
-                renderInternships(filteredInternships);
+                <div class="timeline-item">
+                    <div class="step-info">
+                        <h3>3. Get Personalized Matches</h3>
+                        <p>Lumo recommends the most relevant internships and jobs tailored just for you, matching your unique profile with top opportunities.</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="step-info">
+                        <h3>4. Apply with Confidence</h3>
+                        <p>Directly apply to your chosen roles through Lumo, knowing you're a great fit. Increase your chances of getting hired.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="features">
+            <div class="container">
+                <div class="header-section">
+                    <h1>Our Awesome Features</h1>
+                    <p>Discover how Lumo simplifies your journey to the perfect internship.</p>
+                </div>
+
+                <div class="cards-carousel-container">
+                    <div class="cards-wrapper" id="cardsWrapper">
+                        <div class="feature-card">
+                            <div class="icon-box blue-bg"><i class="fas fa-file-upload"></i></div>
+                            <h3>Upload Resume</h3>
+                            <p>Seamlessly upload your resume in various formats to kickstart your profile.</p>
+                            <a href="#" class="read-more">Read more <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                        <div class="feature-card">
+                            <div class="icon-box red-bg"><i class="fas fa-brain"></i></div>
+                            <h3>AI Matchmaking</h3>
+                            <p>Our intelligent AI analyzes your skills to find the best internship matches for you.</p>
+                            <a href="#" class="read-more">Read more <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                        <div class="feature-card">
+                            <div class="icon-box green-bg"><i class="fas fa-briefcase"></i></div>
+                            <h3>Explore Jobs</h3>
+                            <p>Browse through a wide array of internship and job opportunities tailored for you.</p>
+                            <a href="#" class="read-more">Read more <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                        <div class="feature-card">
+                            <div class="icon-box purple-bg"><i class="fas fa-check-circle"></i></div>
+                            <h3>Easy Apply</h3>
+                            <p>Apply to your dream internships with just a few clicks, hassle-free process.</p>
+                            <a href="#" class="read-more">Read more <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                        <div class="feature-card">
+                            <div class="icon-box orange-bg"><i class="fas fa-chalkboard-teacher"></i></div>
+                            <h3>Training Programs</h3>
+                            <p>Enhance your skills with our curated training programs and expert-led courses.</p>
+                            <a href="#" class="read-more">Read more <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                        <div class="feature-card">
+                            <div class="icon-box darkblue-bg"><i class="fas fa-headset"></i></div>
+                            <h3>24/7 Support</h3>
+                            <p>Get assistance whenever you need it with our dedicated customer support team.</p>
+                            <a href="#" class="read-more">Read more <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                        <div class="feature-card">
+                            <div class="icon-box teal-bg"><i class="fas fa-globe-americas"></i></div>
+                            <h3>Global Opportunities</h3>
+                            <p>Discover internships and jobs from leading companies worldwide.</p>
+                            <a href="#" class="read-more">Read more <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                        <div class="feature-card">
+                            <div class="icon-box brown-bg"><i class="fas fa-user-tie"></i></div>
+                            <h3>Career Guidance</h3>
+                            <p>Receive expert advice and resources to navigate your career path successfully.</p>
+                            <a href="#" class="read-more">Read more <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                    
+                    <div class="carousel-controls">
+                        <button id="prevBtn" class="carousel-control-btn"><i class="fas fa-chevron-left"></i></button>
+                        <button id="nextBtn" class="carousel-control-btn"><i class="fas fa-chevron-right"></i></button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        console.log("Lumo website loaded successfully!");
+
+        const loginButton = document.querySelector('.btn-login');
+
+        if (loginButton) {
+            loginButton.addEventListener('click', () => {
+                alert('Login functionality coming soon!');
             });
         }
 
-        // Initialize the page
         document.addEventListener('DOMContentLoaded', () => {
-            renderInternships();
-            setupSearch();
+            // --- Login Button Alert Logic ---
+            console.log("Lumo website loaded successfully!");
+            const loginButton = document.querySelector('.btn-login');
+            if (loginButton) {
+                loginButton.addEventListener('click', () => {
+                    alert('Login functionality coming soon!');
+                });
+            }
+
+            // --- Center-Focused Carousel Logic ---
+            const cardsWrapper = document.getElementById('cardsWrapper');
+            const featureCards = Array.from(cardsWrapper.getElementsByClassName('feature-card'));
+            const totalCards = featureCards.length;
+            let activeIndex = 0;
+            let autoPlayInterval;
+            const autoPlayDelay = 3000;
+
+            function showCard(index) {
+                featureCards.forEach((card) => {
+                    card.classList.remove('card-active', 'card-prev', 'card-next');
+                });
+
+                const prevIndex = (index - 1 + totalCards) % totalCards;
+                const nextIndex = (index + 1) % totalCards;
+
+                featureCards[index].classList.add('card-active');
+                featureCards[prevIndex].classList.add('card-prev');
+                featureCards[nextIndex].classList.add('card-next');
+            }
+
+            function nextCard() {
+                activeIndex = (activeIndex + 1) % totalCards;
+                showCard(activeIndex);
+                resetAutoPlay();
+            }
+
+            function prevCard() {
+                activeIndex = (activeIndex - 1 + totalCards) % totalCards;
+                showCard(activeIndex);
+                resetAutoPlay();
+            }
+
+            document.getElementById('nextBtn').addEventListener('click', nextCard);
+            document.getElementById('prevBtn').addEventListener('click', prevCard);
+
+            featureCards.forEach((card, index) => {
+                card.addEventListener('click', () => {
+                    if (index !== activeIndex) {
+                        activeIndex = index;
+                        showCard(activeIndex);
+                        resetAutoPlay();
+                    }
+                });
+            });
+
+            function startAutoPlay() {
+                stopAutoPlay();
+                autoPlayInterval = setInterval(nextCard, autoPlayDelay);
+            }
+
+            function stopAutoPlay() {
+                clearInterval(autoPlayInterval);
+            }
+
+            function resetAutoPlay() {
+                stopAutoPlay();
+                startAutoPlay();
+            }
+
+            if (totalCards > 0) {
+                showCard(activeIndex);
+                startAutoPlay();
+
+                const carouselContainer = document.querySelector('.cards-carousel-container');
+                if (carouselContainer) {
+                    carouselContainer.addEventListener('mouseenter', stopAutoPlay);
+                    carouselContainer.addEventListener('mouseleave', startAutoPlay);
+                }
+            }
         });
     </script>
+
 </body>
 </html>

@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Profile - InternHub</title>
+    <title>Profile - LUMO</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.15.1/devicon.min.css">
     <style>
         * {
             margin: 0;
@@ -11,9 +12,30 @@
             box-sizing: border-box;
         }
 
+        /* NEW: CSS Variables from the advanced navbar for consistency */
+        :root {
+            /* Colors */
+            --primary-color: #3b82f6;
+            --primary-hover: #2563eb;
+            --primary-light-bg: #eff6ff;
+            --text-dark: #1e293b;
+            --text-light: #64748b;
+            --bg-light: #f8fafc; /* Updated background to match profile page */
+            --bg-card: white;
+            --border-color: #e2e8f0;
+            --success-color: #10b981;
+            --warning-color: #f59e0b;
+
+            /* Shadows & Transitions */
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background-color: #fafafa;
+            background-color: var(--bg-light); /* Use variable */
             color: #333;
             line-height: 1.6;
         }
@@ -24,65 +46,115 @@
             padding: 0 20px;
         }
 
-        /* Header */
-        header {
-            background: white;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        /* NEW / UPDATED HEADER & NAVBAR STYLES */
+        .header {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-color);
+            padding: 1rem 0;
             position: sticky;
             top: 0;
             z-index: 100;
         }
 
-        nav {
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 1rem 0;
         }
 
         .logo {
             font-size: 1.5rem;
             font-weight: bold;
-            color: #2563eb;
+            color: var(--primary-color);
         }
 
         .nav-links {
             display: flex;
-            list-style: none;
             gap: 2rem;
+            list-style: none;
         }
 
         .nav-links a {
             text-decoration: none;
-            color: #333;
+            color: var(--text-light);
             font-weight: 500;
-            transition: color 0.3s;
+            transition: color 0.2s;
+            position: relative;
+            padding-bottom: 5px;
+        }
+        
+        .nav-links a.active {
+            color: var(--primary-color);
         }
 
-        .nav-links a:hover, .nav-links a.active {
-            color: #2563eb;
+        .nav-links a:hover {
+            color: var(--primary-color);
         }
 
-        .user-menu {
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--primary-color);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after,
+        .nav-links a.active::after {
+            width: 100%;
+        }
+
+        .auth-buttons {
             display: flex;
-            align-items: center;
             gap: 1rem;
         }
 
-        .user-avatar {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: #2563eb;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-weight: bold;
+        /* Re-using existing button styles and enhancing them */
+        .btn {
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+            border: none;
             cursor: pointer;
+            font-size: 0.9rem;
+            box-shadow: var(--shadow-sm);
         }
 
-        /* Main Content */
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .btn-outline {
+            border: 1px solid var(--primary-color);
+            color: var(--primary-color);
+            background: transparent;
+        }
+
+        .btn-outline:hover {
+            background: var(--primary-color);
+            color: var(--bg-card);
+        }
+
+        .btn-primary {
+            background: var(--primary-color);
+            color: var(--bg-card);
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-hover);
+        }
+
+        /* Main Content (from your profile page) */
         main {
             display: grid;
             grid-template-columns: 300px 1fr;
@@ -196,46 +268,15 @@
 
         .section-header {
             display: flex;
-            justify-content: between;
+            justify-content: space-between;
             align-items: center;
             margin-bottom: 1.5rem;
         }
 
         .section-title {
-            fontSize: 1.3rem;
+            font-size: 1.3rem;
             font-weight: 600;
             color: #1f2937;
-        }
-
-        .btn {
-            padding: 0.5rem 1rem;
-            border-radius: 6px;
-            text-decoration: none;
-            font-weight: 500;
-            transition: all 0.3s;
-            border: none;
-            cursor: pointer;
-            font-size: 0.9rem;
-        }
-
-        .btn-outline {
-            border: 1px solid #2563eb;
-            color: #2563eb;
-            background: transparent;
-        }
-
-        .btn-outline:hover {
-            background: #2563eb;
-            color: white;
-        }
-
-        .btn-primary {
-            background: #2563eb;
-            color: white;
-        }
-
-        .btn-primary:hover {
-            background: #1d4ed8;
         }
 
         /* Profile Info */
@@ -390,22 +431,147 @@
         .section.active {
             display: block;
         }
+
+        /* Styling for Skill Icons */
+        .skill-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        /* Modal Styles (reusing from previous design) */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 200;
+        }
+
+        .modal-content {
+            background: var(--bg-light);
+            border-radius: 1rem;
+            padding: 2.5rem;
+            width: 90%;
+            max-width: 600px; /* Increased size for skills modal */
+            box-shadow: var(--shadow-lg);
+            position: relative;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 1rem;
+            right: 1.5rem;
+            font-size: 1.75rem;
+            color: var(--text-light);
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: flex-end;
+        }
+
+        /* NEW: Styles for the Skills Modal */
+        .skills-modal {
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .skill-suggestions {
+            max-height: 150px;
+            overflow-y: auto;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            margin-top: -1rem; /* Overlap with search bar */
+            background: white;
+        }
+
+        .suggestion-item {
+            padding: 0.75rem 1rem;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            display: flex; /* Added for alignment */
+            align-items: center; /* Added for alignment */
+            gap: 0.5rem; /* Added for spacing */
+        }
+
+        .suggestion-item:hover {
+            background-color: var(--primary-light-bg);
+        }
+
+        .suggestion-item:not(:last-child) {
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .selected-skills-container {
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .selected-skills-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 1rem;
+        }
+
+        .no-skills-text {
+            color: var(--text-light);
+            font-style: italic;
+        }
+
+        /* Make selected skills removable */
+        #selected-skills .skill-tag {
+            cursor: pointer;
+            background-color: var(--primary-light-bg);
+            position: relative;
+        }
+        #selected-skills .skill-tag:hover::after {
+            content: '×';
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: #ff4d4d;
+            color: white;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
-    <header>
-        <nav class="container">
-            <div class="logo">InternHub</div>
-            <ul class="nav-links">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="#internships">Internships</a></li>
-                <li><a href="#companies">Companies</a></li>
-                <li><a href="profile.html" class="active">Profile</a></li>
-            </ul>
-            <div class="user-menu">
-                <div class="user-avatar">JS</div>
+    <header class="header">
+        <div class="nav-container">
+            <div class="logo">LUMO</div>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="intership.html">Internships</a></li>
+                    <li><a href="company.html">Companies</a></li>
+                    <li><a href="notification.html">Notifications</a></li>
+                    <li><a href="about.html">About</a></li>
+                </ul>
+            </nav>
+            <div class="auth-buttons">
+                <a href="profile.html" class="btn btn-primary active">My Profile</a>
+                <a href="landing.html" class="btn btn-outline">Logout</a>
             </div>
-        </nav>
+        </div>
     </header>
 
     <div class="container">
@@ -450,7 +616,6 @@
             </aside>
 
             <div class="content">
-                <!-- Overview Section -->
                 <div id="overview" class="section active">
                     <div class="section-card">
                         <div class="section-header">
@@ -488,7 +653,6 @@
                     </div>
                 </div>
 
-                <!-- Personal Info Section -->
                 <div id="personal-info" class="section">
                     <div class="section-card">
                         <div class="section-header">
@@ -531,32 +695,29 @@
                     </div>
                 </div>
 
-                <!-- Skills Section -->
                 <div id="skills" class="section">
                     <div class="section-card">
                         <div class="section-header">
                             <h2 class="section-title">Skills & Technologies</h2>
-                            <button class="btn btn-outline">Add Skill</button>
+                            <button class="btn btn-outline" onclick="openSkillsModal()">Add Skill</button>
                         </div>
                         
-                        <div class="skills-grid">
-                            <span class="skill-tag">JavaScript</span>
-                            <span class="skill-tag">Python</span>
-                            <span class="skill-tag">React</span>
-                            <span class="skill-tag">Node.js</span>
-                            <span class="skill-tag">HTML/CSS</span>
-                            <span class="skill-tag">SQL</span>
-                            <span class="skill-tag">Git</span>
-                            <span class="skill-tag">MongoDB</span>
-                            <span class="skill-tag">Java</span>
-                            <span class="skill-tag">TypeScript</span>
-                            <span class="skill-tag">Docker</span>
-                            <span class="skill-tag">AWS</span>
+                        <div class="skills-grid" id="skills-list">
+                            <span class="skill-tag"><span><img width="48" height="48" src="https://img.icons8.com/color/48/javascript--v1.png" alt="javascript--v1"/></span> JavaScript</span>
+                            <span class="skill-tag"><span><img width="48" height="48" src="https://img.icons8.com/color/48/python--v1.png" alt="python--v1"/></span> Python</span>
+                            <span class="skill-tag"><span><img width="50" height="50" src="https://img.icons8.com/plasticine/50/react.png" alt="react"/></span> React</span>
+                            <span class="skill-tag"><span><img width="48" height="48" src="https://img.icons8.com/color/48/nodejs.png" alt="nodejs"/></span> Node.js</span>
+                            <span class="skill-tag"><span><img width="48" height="48" src="https://img.icons8.com/color/48/css3.png" alt="css3"/></span> HTML/CSS</span>
+                            <span class="skill-tag"><span><img width="50" height="50" src="https://img.icons8.com/external-outline-juicy-fish/50/external-sql-coding-and-development-outline-outline-juicy-fish.png" alt="external-sql-coding-and-development-outline-outline-juicy-fish"/></span> SQL</span>
+                            <span class="skill-tag"><span><img width="48" height="48" src="https://img.icons8.com/color/48/git.png" alt="git"/></span> Git</span>
+                            <span class="skill-tag"><span><img width="24" height="24" src="https://img.icons8.com/external-tal-revivo-shadow-tal-revivo/24/external-mongodb-a-cross-platform-document-oriented-database-program-logo-shadow-tal-revivo.png" alt="external-mongodb-a-cross-platform-document-oriented-database-program-logo-shadow-tal-revivo"/></span> MongoDB</span>
+                            <span class="skill-tag"><span><img width="48" height="48" src="https://img.icons8.com/color/48/java-coffee-cup-logo.png" alt="java-coffee-cup-logo"/></span> Java</span>
+                            <span class="skill-tag"><span><img width="48" height="48" src="https://img.icons8.com/color/48/typescript.png" alt="typescript"/></span> TypeScript</span>
+                            <span class="skill-tag"><span><img width="48" height="48" src="https://img.icons8.com/color/48/amazon-web-services.png" alt="amazon-web-services"/></span> AWS</span>
                         </div>
                     </div>
                 </div>
 
-                <!-- Experience Section -->
                 <div id="experience" class="section">
                     <div class="section-card">
                         <div class="section-header">
@@ -592,7 +753,6 @@
                     </div>
                 </div>
 
-                <!-- Education Section -->
                 <div id="education" class="section">
                     <div class="section-card">
                         <div class="section-header">
@@ -616,7 +776,6 @@
                     </div>
                 </div>
 
-                <!-- Settings Section -->
                 <div id="settings" class="section">
                     <div class="section-card">
                         <h2 class="section-title">Account Settings</h2>
@@ -651,6 +810,31 @@
                 </div>
             </div>
         </main>
+    </div>
+
+    <div id="skillsModal" class="modal-overlay">
+        <div class="modal-content skills-modal">
+            <span class="modal-close" onclick="closeSkillsModal()">&times;</span>
+            <h2 class="section-title" style="text-align: center; margin-bottom: 1.5rem;">Add Your Skills</h2>
+            
+            <div class="form-group">
+                <input type="text" id="skill-search" class="form-input" placeholder="Search for skills like 'React' or 'Python'...">
+            </div>
+
+            <div class="skill-suggestions" id="skill-suggestions"></div>
+
+            <div class="selected-skills-container">
+                <h3 class="selected-skills-title">Your Skills</h3>
+                <div class="skills-grid" id="selected-skills">
+                    <p class="no-skills-text">No skills added yet.</p>
+                </div>
+            </div>
+
+            <div class="modal-buttons" style="margin-top: 2rem;">
+                <button class="btn btn-outline" onclick="closeSkillsModal()">Cancel</button>
+                <button class="btn btn-primary" onclick="saveSkills()">Save Skills</button>
+            </div>
+        </div>
     </div>
 
     <script>
@@ -691,11 +875,151 @@
                 if (button.textContent.includes('Save')) {
                     button.addEventListener('click', (e) => {
                         e.preventDefault();
-                        alert('Changes saved successfully!');
+                        if (!button.onclick) { // Prevent double-alert from modal save button
+                           alert('Changes saved successfully!');
+                        }
                     });
                 }
             });
         });
+
+        // --- SKILLS MODAL LOGIC ---
+
+        // 1. "Database" of all available skills
+        const allSkills = [
+            { name: 'JavaScript', icon: '<img width="48" height="48" src="https://img.icons8.com/color/48/javascript--v1.png" alt="javascript--v1"/>' },
+            { name: 'Python', icon: '<img width="48" height="48" src="https://img.icons8.com/color/48/python--v1.png" alt="python--v1"/>' },
+            { name: 'React', icon: '<img width="50" height="50" src="https://img.icons8.com/plasticine/50/react.png" alt="react"/>' },
+            { name: 'Node.js', icon: '<img width="48" height="48" src="https://img.icons8.com/color/48/nodejs.png" alt="nodejs"/>' },
+            { name: 'HTML/CSS', icon: '<img width="48" height="48" src="https://img.icons8.com/color/48/css3.png" alt="css3"/>' },
+            { name: 'SQL', icon: '<img width="50" height="50" src="https://img.icons8.com/external-outline-juicy-fish/50/external-sql-coding-and-development-outline-outline-juicy-fish.png" alt="external-sql-coding-and-development-outline-outline-juicy-fish"/>' },
+            { name: 'Git', icon: '<img width="48" height="48" src="https://img.icons8.com/color/48/git.png" alt="git"/>' },
+            { name: 'MongoDB', icon: '<img width="24" height="24" src="https://img.icons8.com/external-tal-revivo-shadow-tal-revivo/24/external-mongodb-a-cross-platform-document-oriented-database-program-logo-shadow-tal-revivo.png" alt="external-mongodb-a-cross-platform-document-oriented-database-program-logo-shadow-tal-revivo"/>' },
+            { name: 'Java', icon: '<img width="48" height="48" src="https://img.icons8.com/color/48/java-coffee-cup-logo.png" alt="java-coffee-cup-logo"/>' },
+            { name: 'TypeScript', icon: '<img width="48" height="48" src="https://img.icons8.com/color/48/typescript.png" alt="typescript"/>' },
+            { name: 'AWS', icon: '<img width="48" height="48" src="https://img.icons8.com/color/48/amazon-web-services.png" alt="amazon-web-services"/>' },
+            { name: 'Vue.js', icon: '<img width="48" height="48" src="https://img.icons8.com/color/48/vue-js.png" alt="vue-js"/>' },
+            { name: 'Angular', icon: '<img width="48" height="48" src="https://img.icons8.com/color/48/angularjs.png" alt="angularjs"/>' },
+            { name: 'PHP', icon: '<img width="48" height="48" src="https://img.icons8.com/officel/48/php-logo.png" alt="php-logo"/>' },
+            { name: 'Ruby', icon: '<img width="48" height="48" src="https://img.icons8.com/color/48/ruby-programming-language.png" alt="ruby-programming-language"/>' },
+            { name: 'Swift', icon: '<img width="48" height="48" src="https://img.icons8.com/color/48/swift.png" alt="swift"/>' },
+            { name: 'C++', icon: '<img width="48" height="48" src="https://img.icons8.com/color/48/c-plus-plus-logo.png" alt="c-plus-plus-logo"/>' },
+            { name: 'C#', icon: '<img width="48" height="48" src="https://img.icons8.com/color/48/c-sharp-logo.png" alt="c-sharp-logo"/>' },
+            { name: 'Go', icon: '<img width="48" height="48" src="https://img.icons8.com/color/48/golang.png" alt="golang"/>' },
+            { name: 'Figma', icon: '<img width="48" height="48" src="https://img.icons8.com/color/48/figma--v1.png" alt="figma--v1"/>' },
+            { name: 'PostgreSQL', icon: '<img width="48" height="48" src="https://img.icons8.com/color/48/postgreesql.png" alt="postgreesql"/>' },
+        ];
+
+
+        let selectedSkills = []; // This will hold the skills the user picks
+
+        const skillsModal = document.getElementById('skillsModal');
+        const searchInput = document.getElementById('skill-search');
+        const suggestionsContainer = document.getElementById('skill-suggestions');
+        const selectedContainer = document.getElementById('selected-skills');
+
+        // 2. Functions to open and close the modal
+        function openSkillsModal() {
+            skillsModal.style.display = 'flex';
+            // Load skills that are already on the page
+            loadCurrentSkills();
+        }
+
+        function closeSkillsModal() {
+            skillsModal.style.display = 'none';
+            searchInput.value = ''; // Clear search
+            suggestionsContainer.innerHTML = ''; // Clear suggestions
+        }
+
+        // 3. Search and display suggestions
+        searchInput.addEventListener('keyup', () => {
+            const query = searchInput.value.toLowerCase();
+            suggestionsContainer.innerHTML = '';
+
+            if (query.length < 1) return;
+
+            const filteredSkills = allSkills.filter(skill => 
+                skill.name.toLowerCase().includes(query) && !selectedSkills.some(s => s.name === skill.name)
+            );
+
+            filteredSkills.forEach(skill => {
+                const div = document.createElement('div');
+                div.className = 'suggestion-item';
+                // --- FIX #1: Use innerHTML to render the icon's img tag ---
+                div.innerHTML = `${skill.icon} ${skill.name}`;
+                div.onclick = () => addSkill(skill);
+                suggestionsContainer.appendChild(div);
+            });
+        });
+
+        // 4. Add/Remove skills from the selection
+        function addSkill(skill) {
+            if (!selectedSkills.some(s => s.name === skill.name)) {
+                selectedSkills.push(skill);
+                searchInput.value = '';
+                suggestionsContainer.innerHTML = '';
+                searchInput.focus(); // Keep focus on the search bar
+                renderSelectedSkills();
+            }
+        }
+
+        function removeSkill(skillName) {
+            selectedSkills = selectedSkills.filter(s => s.name !== skillName);
+            renderSelectedSkills();
+        }
+
+        // 5. Render the selected skills in the modal
+        function renderSelectedSkills() {
+            selectedContainer.innerHTML = '';
+            if (selectedSkills.length === 0) {
+                selectedContainer.innerHTML = '<p class="no-skills-text">No skills added yet.</p>';
+                return;
+            }
+
+            selectedSkills.forEach(skill => {
+                const tag = document.createElement('span');
+                tag.className = 'skill-tag';
+                tag.innerHTML = `${skill.icon} ${skill.name}`;
+                tag.onclick = () => removeSkill(skill.name);
+                selectedContainer.appendChild(tag);
+            });
+        }
+
+        // --- FIX #2: Correctly load existing skills from the page into the modal ---
+        function loadCurrentSkills() {
+            selectedSkills = []; // Reset the array
+            const currentSkillTags = document.querySelectorAll('#skills-list .skill-tag');
+
+            currentSkillTags.forEach(tag => {
+                // Just get the skill name from the tag's text content
+                const skillName = tag.textContent.trim();
+
+                // Now, find the corresponding full skill object (with name and icon) from our database
+                const skillObject = allSkills.find(s => s.name === skillName);
+
+                // If we found it, add the complete object to our selected skills for the modal
+                if (skillObject) {
+                    selectedSkills.push(skillObject);
+                }
+            });
+            renderSelectedSkills(); // Now render them correctly in the modal
+        }
+
+
+        // 7. Save skills back to the main page
+        function saveSkills() {
+            const mainSkillsList = document.getElementById('skills-list');
+            mainSkillsList.innerHTML = ''; // Clear current list
+
+            selectedSkills.forEach(skill => {
+                const tag = document.createElement('span');
+                tag.className = 'skill-tag';
+                tag.innerHTML = `<span>${skill.icon}</span> ${skill.name}`;
+                mainSkillsList.appendChild(tag);
+            });
+
+            closeSkillsModal();
+        }
     </script>
 </body>
 </html>

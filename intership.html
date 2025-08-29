@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>InternHub - Find Your Dream Internship</title>
+    <title>LUMO - Find Your Dream Internship</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/locomotive-scroll@3.5.4/dist/locomotive-scroll.css">
     <style>
         * {
@@ -61,9 +61,9 @@
         }
 
         .container {
-            max-width: 1400px;
+            max-width: 1200px;
             margin: 0 auto;
-            padding: 0 20px;
+            padding: 15px 20px;
         }
 
         /* Enhanced Header */
@@ -81,7 +81,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 1rem 0;
+            padding: 1rem 0rem;
         }
 
         .logo {
@@ -113,6 +113,11 @@
             position: relative;
             transition: var(--transition);
         }
+        
+        /* FIXED: Added .active class selector */
+        .nav-links a.active {
+            color: var(--primary);
+        }
 
         .nav-links a::after {
             content: '';
@@ -129,7 +134,8 @@
             color: var(--primary);
         }
 
-        .nav-links a:hover::after {
+        /* FIXED: Added .active::after to this rule */
+        .nav-links a:hover::after, .nav-links a.active::after {
             width: 100%;
         }
 
@@ -197,7 +203,7 @@
             grid-template-columns: 320px 1fr;
             gap: 2.5rem;
             padding: 2.5rem 0;
-            max-width: 1400px;
+            max-width: 1200px; 
             margin: 0 auto;
         }
 
@@ -311,85 +317,6 @@
             display: flex;
             flex-direction: column;
             gap: 2.5rem;
-        }
-
-        /* Enhanced Hero Section */
-        .header-section {
-            background: var(--gradient-hero);
-            border-radius: 24px;
-            padding: 4rem 3rem;
-            text-align: center;
-            box-shadow: var(--shadow-xl);
-            position: relative;
-            overflow: hidden;
-            color: white;
-        }
-
-        .header-section::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="white" opacity="0.1"/><circle cx="75" cy="75" r="1" fill="white" opacity="0.1"/><circle cx="50" cy="10" r="0.5" fill="white" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
-            opacity: 0.3;
-        }
-
-        .header-section > * {
-            position: relative;
-            z-index: 1;
-        }
-
-        .header-section h1 {
-            font-size: 3.5rem;
-            font-weight: 900;
-            margin-bottom: 1.5rem;
-            line-height: 1.1;
-            text-shadow: 0 4px 8px rgba(0,0,0,0.1);
-        }
-
-        .header-section p {
-            font-size: 1.25rem;
-            opacity: 0.9;
-            max-width: 700px;
-            margin: 0 auto 3rem;
-            line-height: 1.6;
-        }
-
-        .stats {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 3rem;
-            margin-top: 3rem;
-        }
-
-        .stat-item {
-            text-align: center;
-            padding: 1.5rem;
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border-radius: 16px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            transition: var(--transition);
-        }
-
-        .stat-item:hover {
-            transform: translateY(-5px);
-            background: rgba(255, 255, 255, 0.15);
-        }
-
-        .stat-number {
-            font-size: 2.5rem;
-            font-weight: 900;
-            display: block;
-            margin-bottom: 0.5rem;
-        }
-
-        .stat-label {
-            font-size: 1rem;
-            opacity: 0.9;
-            font-weight: 500;
         }
 
         /* Enhanced Internship Cards */
@@ -532,16 +459,6 @@
             to { transform: rotate(360deg); }
         }
 
-        /* Floating Animation */
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
-        }
-
-        .floating {
-            animation: float 3s ease-in-out infinite;
-        }
-
         /* Mobile Menu */
         .mobile-menu-btn {
             display: none;
@@ -556,15 +473,6 @@
         @media (max-width: 1024px) {
             main {
                 grid-template-columns: 280px 1fr;
-                gap: 2rem;
-            }
-            
-            .header-section h1 {
-                font-size: 2.8rem;
-            }
-            
-            .stats {
-                grid-template-columns: repeat(3, 1fr);
                 gap: 2rem;
             }
         }
@@ -593,19 +501,6 @@
                 display: block;
             }
 
-            .header-section {
-                padding: 3rem 2rem;
-            }
-
-            .header-section h1 {
-                font-size: 2.5rem;
-            }
-
-            .stats {
-                grid-template-columns: 1fr;
-                gap: 1.5rem;
-            }
-
             .internships-grid {
                 grid-template-columns: 1fr;
             }
@@ -621,40 +516,27 @@
         }
 
         @media (max-width: 480px) {
-            .header-section h1 {
-                font-size: 2rem;
-            }
-
-            .header-section p {
-                font-size: 1.1rem;
-            }
-
             .internship-card {
                 padding: 1.5rem;
             }
         }
-
-        /* REMOVED THE @media (prefers-color-scheme: dark) BLOCK 
-        TO FORCE THE LIGHT THEME.
-        */
 
     </style>
 </head>
 <body>
     <header>
         <nav class="container">
-            <a href="#" class="logo">InternHub</a>
+            <a href="#" class="logo">LUMO</a>
             <ul class="nav-links">
-                <li><a href="#home">Home</a></li>
-                <li><a href="#internships">Internships</a></li>
-                <li><a href="#companies">Companies</a></li>
-                <li><a href="profile.html">Profile</a></li>
-                <li><a href="#about">About</a></li>
+                <li><a href="intership.html" class="active">Internships</a></li>
+                <li><a href="company.html">Companies</a></li>
+                <li><a href="notification.html">Notifications</a></li>
+                <li><a href="about.html">About</a></li>
             </ul>
             <button class="mobile-menu-btn">☰</button>
             <div class="auth-buttons">
-                <a href="#login" class="btn btn-outline">Login</a>
-                <a href="#signup" class="btn btn-primary">Sign Up</a>
+                <a href="#logout" class="btn btn-outline">Logout</a>
+                <a href="profile.html" class="btn btn-primary">My Profile</a>
             </div>
         </nav>
     </header>

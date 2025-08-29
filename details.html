@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Frontend Developer Intern - InternHub</title>
+    <title>Frontend Developer Intern - LUMO</title>
     <style>
         * {
             margin: 0;
@@ -80,6 +80,10 @@
             padding-bottom: 5px;
         }
 
+        .nav-links a.active {
+            color: var(--primary-color);
+        }
+
         .nav-links a:hover {
             color: var(--primary-color);
         }
@@ -95,7 +99,8 @@
             transition: width 0.3s ease;
         }
 
-        .nav-links a:hover::after {
+        .nav-links a:hover::after,
+        .nav-links a.active::after {
             width: 100%;
         }
 
@@ -399,23 +404,75 @@
                 display: none;
             }
         }
+
+        /* Modal Styles for Glassmorphism */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 200;
+        }
+
+        .modal-content {
+            background: var(--bg-light);
+            border-radius: 1rem;
+            padding: 2.5rem;
+            width: 90%;
+            max-width: 550px;
+            box-shadow: var(--shadow-lg);
+            text-align: center;
+            position: relative;
+            min-height: 250px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 1rem;
+            right: 1.5rem;
+            font-size: 1.75rem;
+            color: var(--text-light);
+            cursor: pointer;
+            font-weight: bold;
+            transition: transform 0.2s;
+        }
+
+        .modal-close:hover {
+            transform: scale(1.2);
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+        }
     </style>
 </head>
 <body>
     <header class="header">
         <div class="nav-container">
-            <div class="logo">InternHub</div>
+            <div class="logo">LUMO</div>
             <nav>
                 <ul class="nav-links">
-                    <li><a href="#home">Home</a></li>
-                    <li><a href="#internships">Internships</a></li>
-                    <li><a href="#companies">Companies</a></li>
-                    <li><a href="#about">About</a></li>
+                    <li><a href="intership.html">Internships</a></li>
+                    <li><a href="company.html">Companies</a></li>
+                    <li><a href="notification.html">Notifications</a></li>
+                    <li><a href="about.html">About</a></li>
                 </ul>
             </nav>
             <div class="auth-buttons">
-                <a href="#login" class="btn btn-outline">Login</a>
-                <a href="#signup" class="btn btn-primary">Sign Up</a>
+                <a href="profile.html" class="btn btn-primary">My Profile</a>
+                <a href="landing.html" class="btn btn-outline">Logout</a>
             </div>
         </div>
     </header>
@@ -560,6 +617,18 @@
         </div>
     </main>
 
+    <div id="glassModal" class="modal-overlay">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeModal()">&times;</span>
+            <h2 style="color: var(--success-color); margin-bottom: 0.5rem;">Application Sent!</h2>
+            <p style="color: var(--text-light); margin-bottom: 2rem;">Now, you can fine-tune your application for this internship.</p>
+            <div class="modal-buttons">
+                <button class="btn btn-outline" onclick="closeModal()">Edit Manually</button>
+                <button class="btn btn-primary" onclick="closeModal()">Use AI to Enhance</button>
+            </div>
+        </div>
+    </div>
+
     <script>
         function showApplyForm() {
             document.getElementById('uploadSection').style.display = 'block';
@@ -584,11 +653,17 @@
                 alert('Please upload your resume first.');
                 return;
             }
-            // Simulate application submission
-            alert('Application submitted successfully! You will receive a confirmation email shortly.');
-            // Reset form
+            document.getElementById('glassModal').style.display = 'flex';
+        }
+
+        function closeModal() {
+            document.getElementById('glassModal').style.display = 'none';
+            
             document.getElementById('uploadSection').style.display = 'none';
-            document.querySelector('.apply-button').style.display = 'block';
+            const applyButton = document.querySelector('.apply-button');
+            if(applyButton) {
+                applyButton.style.display = 'block';
+            }
             document.getElementById('uploadText').innerHTML = `
                 <div style="font-size: 2rem; margin-bottom: 0.5rem;">📄</div>
                 <div>Click to upload resume</div>
