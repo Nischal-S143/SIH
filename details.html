@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Frontend Developer Intern - LUMO</title>
     <style>
-        * {
+    * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
@@ -127,15 +127,16 @@
         }
 
         .btn-outline {
-            border: 1px solid var(--primary-color);
-            color: var(--primary-color);
-            background: transparent;
-        }
+    border: 2px solid var(--primary-color);
+    color: var(--primary-color);
+    background: transparent;
+    font-weight: 600;
+}
 
-        .btn-outline:hover {
-            background: var(--primary-color);
-            color: var(--bg-card);
-        }
+.btn-outline:hover {
+    background: var(--primary-color);
+    color: var(--bg-card);
+}
 
         .btn-primary {
             background: var(--primary-color);
@@ -323,15 +324,27 @@
             margin-bottom: 0.5rem;
         }
 
-        .apply-button {
-            width: 100%;
+        .apply-buttons-group {
+            display: flex;
+            flex-direction: column; /* Stack buttons vertically initially */
+            gap: 0.75rem; /* Space between buttons */
+            margin-top: 1rem; /* Space below salary info */
+        }
+
+        .apply-button,
+        .apply-secondary-btn {
+            width: 100%; /* Make them full width */
             padding: 1rem;
-            margin-bottom: 1rem;
             font-size: 1.125rem;
         }
 
+        /* Hide the apply button margin when it's part of the group */
+        .apply-buttons-group .apply-button {
+            margin-bottom: 0;
+        }
+
         .upload-section {
-            margin-top: 1rem;
+            margin-top: 1.5rem; /* Increased margin for better spacing */
         }
 
         .file-upload {
@@ -389,6 +402,16 @@
             font-weight: 600;
         }
 
+        @media (min-width: 600px) { /* Adjust for larger screens if needed, otherwise leave as column */
+            .apply-buttons-group {
+                flex-direction: row; /* Buttons side-by-side on larger screens */
+                flex-wrap: wrap; /* Allow wrapping if space is tight */
+            }
+            .apply-secondary-btn {
+                flex: 1; /* Distribute space equally */
+            }
+        }
+
         @media (max-width: 768px) {
             .content-grid {
                 grid-template-columns: 1fr;
@@ -402,6 +425,9 @@
             }
             .nav-links {
                 display: none;
+            }
+            .apply-buttons-group {
+                flex-direction: column; /* Always stack on small screens */
             }
         }
 
@@ -555,6 +581,12 @@
                     <div class="salary">$2000/month</div>
                     <p style="color: #64748b; margin-bottom: 1.5rem;">Competitive stipend</p>
                     <button class="btn btn-primary apply-button" onclick="showApplyForm()">Apply Now</button>
+                    
+                    <div style="display: flex; gap: 1rem; margin-top: 1rem;">
+                      <a href="#quiz" class="btn btn-outline" style="width: 100%; text-align: center;">Quiz Questions Practices</a>
+                      <a href="#interview" class="btn btn-outline" style="width: 100%; text-align: center;">Interview Practices</a>
+                    </div>
+      
                     <div class="upload-section" id="uploadSection" style="display: none;">
                         <h3 style="margin-bottom: 1rem; color: #1e293b;">Upload Resume</h3>
                         <div class="file-upload" onclick="document.getElementById('resume').click()">
