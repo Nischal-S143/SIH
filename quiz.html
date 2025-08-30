@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Lumo AI Powered Quiz</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+    
+    * {
+      box-sizing: border-box;
+      transition: all 0.3s ease;
+    }
+    
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(to bottom, #e6f4ff 0%, #ffffff 100%);
+      min-height: 100vh;
+      margin: 0;
+      padding: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    
+    .lumo-card {
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 8px 32px rgba(0, 123, 255, 0.15);
+      border: 1px solid #e6f4ff;
+    }
+    
+    .btn-primary {
+      background: linear-gradient(90deg, #007bff 0%, #4da6ff 100%);
+      color: white;
+      border: none;
+      border-radius: 12px;
+      padding: 14px 28px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 14px rgba(0, 123, 255, 0.3);
+    }
+    
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0, 123, 255, 0.4);
+    }
+    
+    .option-card {
+      background: #f8fbff;
+      border: 2px solid #e6f4ff;
+      border-radius: 12px;
+      padding: 16px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    
+    .option-card:hover {
+      background: #e6f4ff;
+      transform: translateY(-2px);
+      border-color: #4da6ff;
+    }
+    
+    .option-card.correct {
+      background: rgba(72, 187, 120, 0.1);
+      border-color: #48bb78;
+    }
+    
+    .option-card.incorrect {
+      background: rgba(245, 101, 101, 0.1);
+      border-color: #f56565;
+    }
+    
+    .progress-bar {
+      height: 8px;
+      background: #e6f4ff;
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #007bff 0%, #4da6ff 100%);
+      border-radius: 4px;
+      transition: width 0.5s ease;
+    }
+    
+    .fade-in {
+      animation: fadeIn 0.5s ease forwards;
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .confetti {
+      position: fixed;
+      width: 10px;
+      height: 10px;
+      background-color: #4da6ff;
+      opacity: 0.8;
+      animation: fall linear forwards;
+    }
+    
+    @keyframes fall {
+      to {
+        transform: translateY(100vh) rotate(720deg);
+        opacity: 0;
+      }
+    }
+    
+    .text-blue-custom {
+      color: #007bff;
+    }
+    
+    .bg-blue-custom {
+      background-color: #007bff;
+    }
+  </style>
+</head>
+<body>
+  <div class="w-full max-w-4xl mx-auto p-6">
+    <!-- Header -->
+    <div class="text-center mb-8">
+      <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-blue-100 mb-4">
+        <i class="fas fa-brain text-3xl text-blue-600"></i>
+      </div>
+      <h1 class="text-4xl font-bold text-blue-600 mb-2">
+        Lumo – AI Powered Quiz
+      </h1>
+      <p class="text-gray-600 text-lg">
+        Internship Preparation – Company Based Questions
+      </p>
+    </div>
+
+    <div class="lumo-card p-8">
+      <!-- Progress Section -->
+      <div class="mb-6">
+        <div class="flex justify-between text-gray-600 mb-2">
+          <span id="progressText" class="font-medium">Question 1 of 10</span>
+          <span id="timerText" class="font-medium"><i class="far fa-clock mr-1 text-blue-500"></i>Time: 0s</span>
+        </div>
+        <div class="progress-bar">
+          <div id="progressBar" class="progress-fill" style="width: 10%"></div>
+        </div>
+      </div>
+
+      <!-- Quiz Container -->
+      <div id="quizContainer">
+        <div id="questionBox" class="text-xl font-semibold text-gray-800 mb-6"></div>
+        <div id="optionsBox" class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6"></div>
+        
+        <!-- Navigation Buttons -->
+        <div class="flex justify-between mt-8">
+          <button id="prevBtn" class="px-6 py-3 bg-gray-200 text-gray-700 rounded-xl shadow-sm hover:bg-gray-300 transition opacity-0">
+            <i class="fas fa-arrow-left mr-2"></i>Previous
+          </button>
+          <button id="nextBtn" class="btn-primary hidden">
+            Next <i class="fas fa-arrow-right ml-2"></i>
+          </button>
+          <button id="submitBtn" class="btn-primary bg-green-500 hidden">
+            Submit <i class="fas fa-paper-plane ml-2"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Result Section -->
+      <div id="result" class="hidden text-center py-8">
+        <div class="mb-6">
+          <div class="inline-flex items-center justify-center w-20 h-20 rounded-full bg-blue-100 mb-4">
+            <i class="fas fa-trophy text-3xl text-yellow-500"></i>
+          </div>
+          <h2 class="text-3xl font-bold text-gray-800 mb-2">
+            Your Score: <span id="score" class="text-blue-600"></span>
+          </h2>
+          <p id="accuracy" class="text-gray-600 text-lg mb-1"></p>
+          <p id="totalTime" class="text-gray-600 text-lg mb-1"></p>
+          <p id="avgTime" class="text-gray-600 text-lg mb-4"></p>
+          <p id="feedback" class="text-xl text-gray-700 font-medium mb-6"></p>
+        </div>
+        
+        <div class="flex flex-col sm:flex-row justify-center gap-4">
+          <button onclick="restartQuiz()" class="btn-primary px-6 py-3">
+            <i class="fas fa-redo mr-2"></i>Restart Quiz
+          </button>
+          <button onclick="reviewAnswers()" class="px-6 py-3 bg-gray-200 text-gray-700 rounded-xl shadow-sm hover:bg-gray-300 transition">
+            <i class="fas fa-list mr-2"></i>Review Answers
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Quiz questions - Company focused for internship preparation
+    const questions = [
+      {
+        q: "Which data structure is typically used for implementing a LRU Cache?",
+        options: ["Array", "Linked List", "Hash Map + Doubly Linked List", "Binary Tree"],
+        answer: 2,
+        company: "Google",
+        explanation: "A Hash Map provides O(1) access time, while a Doubly Linked List allows O(1) insertion and deletion, making it perfect for LRU Cache implementation."
+      },
+      {
+        q: "What is the time complexity of QuickSort in the worst case?",
+        options: ["O(n log n)", "O(n²)", "O(log n)", "O(n)"],
+        answer: 1,
+        company: "Amazon",
+        explanation: "QuickSort's worst-case time complexity is O(n²) when the pivot is consistently the smallest or largest element, but it has an average case of O(n log n)."
+      },
+      {
+        q: "Which principle of OOP is demonstrated by method overriding?",
+        options: ["Encapsulation", "Abstraction", "Inheritance", "Polymorphism"],
+        answer: 3,
+        company: "Microsoft",
+        explanation: "Method overriding is a key aspect of polymorphism, allowing a subclass to provide a specific implementation of a method already defined in its parent class."
+      },
+      {
+        q: "In React, what is used to pass data to a component from outside?",
+        options: ["state", "props", "setState", "componentData"],
+        answer: 1,
+        company: "Meta",
+        explanation: "Props (short for properties) are used to pass data from a parent component to a child component in React."
+      },
+      {
+        q: "Which protocol is used for secure communication over a computer network?",
+        options: ["HTTP", "FTP", "HTTPS", "SMTP"],
+        answer: 2,
+        company: "Apple",
+        explanation: "HTTPS (HyperText Transfer Protocol Secure) uses encryption via TLS/SSL to secure communications over a network."
+      },
+      {
+        q: "What does the 'ACID' property in database systems stand for?",
+        options: [
+          "Atomicity, Consistency, Isolation, Durability",
+          "Accuracy, Consistency, Integration, Durability",
+          "Atomicity, Concurrency, Integration, Durability",
+          "Accuracy, Concurrency, Isolation, Durability"
+        ],
+        answer: 0,
+        company: "Oracle",
+        explanation: "ACID properties ensure reliable processing of database transactions: Atomicity (all or nothing), Consistency (valid state change), Isolation (transaction independence), and Durability (committed transactions persist)."
+      },
+      {
+        q: "Which of these is a serverless computing platform?",
+        options: ["AWS Lambda", "EC2", "Google Compute Engine", "Azure Virtual Machine"],
+        answer: 0,
+        company: "Amazon",
+        explanation: "AWS Lambda is a serverless computing service that runs code in response to events without requiring server management."
+      },
+      {
+        q: "What is the main advantage of using a microservices architecture?",
+        options: [
+          "Simpler debugging process",
+          "Easier data management",
+          "Independent deployment and scalability",
+          "Reduced number of developers needed"
+        ],
+        answer: 2,
+        company: "Netflix",
+        explanation: "Microservices allow teams to develop, deploy, and scale components independently, improving agility and scalability."
+      },
+      {
+        q: "Which algorithm is used for shortest path finding in unweighted graphs?",
+        options: ["Dijkstra's Algorithm", "A* Search", "Breadth-First Search", "Depth-First Search"],
+        answer: 2,
+        company: "Uber",
+        explanation: "Breadth-First Search (BFS) is ideal for finding the shortest path in unweighted graphs as it explores all nodes at the present depth before moving deeper."
+      },
+      {
+        q: "What is the purpose of the 'virtual DOM' in React?",
+        options: [
+          "To improve security",
+          "To enable 3D rendering",
+          "To optimize performance by minimizing DOM updates",
+          "To facilitate server-side rendering"
+        ],
+        answer: 2,
+        company: "Meta",
+        explanation: "The virtual DOM is a lightweight copy of the real DOM that allows React to compute minimal changes needed, improving performance by reducing expensive DOM manipulations."
+      }
+    ];
+
+    let currentQuestion = 0;
+    let score = 0;
+    let totalAttempts = 0;
+    let timer = 0;
+    let totalTime = 0;
+    let questionTimes = [];
+    let timerInterval;
+    let userAnswers = [];
+
+    const questionBox = document.getElementById("questionBox");
+    const optionsBox = document.getElementById("optionsBox");
+    const nextBtn = document.getElementById("nextBtn");
+    const prevBtn = document.getElementById("prevBtn");
+    const submitBtn = document.getElementById("submitBtn");
+    const resultDiv = document.getElementById("result");
+    const scoreSpan = document.getElementById("score");
+    const feedback = document.getElementById("feedback");
+    const accuracyEl = document.getElementById("accuracy");
+    const totalTimeEl = document.getElementById("totalTime");
+    const avgTimeEl = document.getElementById("avgTime");
+    const timerText = document.getElementById("timerText");
+    const progressText = document.getElementById("progressText");
+    const progressBar = document.getElementById("progressBar");
+
+    // Load a question
+    function loadQuestion() {
+      const q = questions[currentQuestion];
+      questionBox.innerHTML = `<span class="text-blue-500 font-medium">${questions[currentQuestion].company}</span> - ${currentQuestion + 1}. ${q.q}`;
+      optionsBox.innerHTML = "";
+
+      q.options.forEach((option, i) => {
+        const optionDiv = document.createElement("div");
+        optionDiv.className = "option-card";
+        optionDiv.innerHTML = `
+          <div class="flex items-center">
+            <div class="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center mr-3 font-semibold text-blue-600">${String.fromCharCode(65 + i)}</div>
+            <div class="option-text text-gray-700">${option}</div>
+          </div>
+        `;
+        optionDiv.onclick = () => checkAnswer(i, optionDiv);
+        optionsBox.appendChild(optionDiv);
+      });
+
+      // Reset UI
+      nextBtn.classList.add("hidden");
+      submitBtn.classList.add("hidden");
+      
+      // Show/hide previous button
+      if (currentQuestion > 0) {
+        prevBtn.classList.remove("opacity-0");
+      } else {
+        prevBtn.classList.add("opacity-0");
+      }
+
+      // Update progress
+      progressText.innerText = `Question ${currentQuestion + 1} of ${questions.length}`;
+      progressBar.style.width = `${((currentQuestion + 1) / questions.length) * 100}%`;
+
+      // Reset timer
+      resetTimer();
+    }
+
+    // Reset timer per question
+    function resetTimer() {
+      clearInterval(timerInterval);
+      timer = 0;
+      timerText.innerHTML = '<i class="far fa-clock mr-1 text-blue-500"></i>Time: 0s';
+      timerInterval = setInterval(() => {
+        timer++;
+        timerText.innerHTML = `<i class="far fa-clock mr-1 text-blue-500"></i>Time: ${timer}s`;
+      }, 1000);
+    }
+
+    // Check answer
+    function checkAnswer(selectedIndex, optionDiv) {
+      const correct = questions[currentQuestion].answer;
+
+      // Disable all options after answering
+      Array.from(optionsBox.children).forEach((div, i) => {
+        div.style.pointerEvents = "none";
+        if (i === correct) {
+          div.classList.add("correct");
+        }
+      });
+
+      totalAttempts++;
+      
+      // Store user answer
+      userAnswers[currentQuestion] = {
+        selected: selectedIndex,
+        correct: correct,
+        time: timer
+      };
+      
+      if (selectedIndex === correct) {
+        score++;
+      } else {
+        optionDiv.classList.add("incorrect");
+      }
+
+      totalTime += timer; // add time spent on this question
+      questionTimes.push(timer);
+      clearInterval(timerInterval);
+
+      if (currentQuestion < questions.length - 1) {
+        nextBtn.classList.remove("hidden");
+      } else {
+        submitBtn.classList.remove("hidden");
+      }
+    }
+
+    // Show result
+    function showResult() {
+      document.getElementById("quizContainer").classList.add("hidden");
+      resultDiv.classList.remove("hidden");
+
+      const accuracy = ((score / questions.length) * 100).toFixed(1);
+      const avgTime = (totalTime / questions.length).toFixed(1);
+      
+      scoreSpan.innerText = `${score} / ${questions.length}`;
+      accuracyEl.innerText = `Accuracy: ${accuracy}%`;
+      totalTimeEl.innerText = `Total Time: ${totalTime} seconds`;
+      avgTimeEl.innerText = `Average Time per Question: ${avgTime} seconds`;
+
+      if (score === questions.length) {
+        feedback.innerText = "Perfect score! You're internship ready! 🎉";
+        createConfetti();
+      } else if (score >= questions.length * 0.7) {
+        feedback.innerText = "Great job! You're almost there! 💪";
+      } else if (score >= questions.length * 0.5) {
+        feedback.innerText = "Good effort! Keep learning and practicing. 📚";
+      } else {
+        feedback.innerText = "Keep practicing, you'll improve! 🚀";
+      }
+    }
+
+    // Next question
+    nextBtn.addEventListener("click", () => {
+      currentQuestion++;
+      loadQuestion();
+    });
+
+    // Previous question
+    prevBtn.addEventListener("click", () => {
+      if (currentQuestion > 0) {
+        currentQuestion--;
+        loadQuestion();
+      }
+    });
+
+    // Submit quiz
+    submitBtn.addEventListener("click", showResult);
+
+    // Restart quiz
+    function restartQuiz() {
+      currentQuestion = 0;
+      score = 0;
+      totalAttempts = 0;
+      totalTime = 0;
+      questionTimes = [];
+      userAnswers = [];
+      resultDiv.classList.add("hidden");
+      document.getElementById("quizContainer").classList.remove("hidden");
+      loadQuestion();
+    }
+    
+    // Review answers (placeholder function)
+    function reviewAnswers() {
+      alert("Answer review feature would show:\n\n" + 
+            questions.map((q, i) => 
+              `${i+1}. Your answer: ${String.fromCharCode(65 + userAnswers[i]?.selected || 0)}\n` +
+              `   Correct answer: ${String.fromCharCode(65 + q.answer)}\n` +
+              `   Time: ${userAnswers[i]?.time || 0}s\n` +
+              `   Company: ${q.company}`
+            ).join("\n\n"));
+    }
+    
+    // Create confetti animation
+    function createConfetti() {
+      const colors = ['#007bff', '#4da6ff', '#66b3ff', '#99ccff'];
+      
+      for (let i = 0; i < 150; i++) {
+        setTimeout(() => {
+          const confetti = document.createElement('div');
+          confetti.className = 'confetti';
+          confetti.style.left = Math.random() * 100 + 'vw';
+          confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+          confetti.style.width = (Math.random() * 10 + 5) + 'px';
+          confetti.style.height = (Math.random() * 10 + 5) + 'px';
+          confetti.style.animationDuration = (Math.random() * 3 + 2) + 's';
+          document.body.appendChild(confetti);
+          
+          // Remove confetti after animation completes
+          setTimeout(() => {
+            confetti.remove();
+          }, 5000);
+        }, i * 10);
+      }
+    }
+
+    // Start quiz
+    loadQuestion();
+  </script>
+</body>
+</html>
