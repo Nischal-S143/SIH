@@ -7,11 +7,12 @@
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"/>
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
-
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
         /* General Styling & Variables */
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
         @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
 
         :root {
             --primary-blue: #007BFF;
@@ -29,6 +30,10 @@
             box-sizing: border-box;
         }
 
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
             font-family: 'Poppins', sans-serif;
             background-color: var(--bg-color);
@@ -39,6 +44,21 @@
             max-width: 1200px;
             margin: 0 auto;
             padding: 0 20px;
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #e0f2fe; /* Sky-100 */
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #38bdf8; /* Sky-500 */
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #0ea5e9; /* Sky-600 */
         }
 
         /* Header & Navigation */
@@ -70,112 +90,67 @@
             text-decoration: none;
         }
         
-        .nav-right button {
-            padding: 8px 16px;
-            border-radius: 6px;
-            font-size: 14px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
         .btn-login {
-    /* Core styles */
-    background-color: var(--primary-blue);
-    color: white;
-    border: none;
-    
-    /* FIX: Added generous padding */
-    padding: 12px 25px; 
-
-    /* Other refinements */
-    border-radius: 8px;
-    font-weight: 600;
-    font-size: 15px;
-    cursor: pointer;
-    text-decoration: none;
-    display: inline-block;
-    box-shadow: 0 3px 8px rgba(0, 123, 255, 0.3); /* Add depth */
-    transition: all 0.3s ease;
-}
-
-.btn-login:hover {
-    background-color: #006fe6; /* Slightly darker on hover */
-    transform: translateY(-2px);
-    box-shadow: 0 6px 15px rgba(0, 123, 255, 0.4); /* Enhance shadow */
-}
-        /* Hero Section */
-        .hero-section {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 80px 20px;
-            background-color: var(--bg-color);
-            min-height: 90vh;
-        }
-
-        .hero-text {
-            max-width: 500px;
-        }
-
-        .hero-text h1 {
-            font-size: 52px;
-            color: var(--dark-text);
-            line-height: 1.2;
-        }
-
-        .hero-text p {
-            font-size: 18px;
-            color: var(--light-text);
-            margin: 20px 0 30px;
-        }
-
-        .hero-buttons button {
-            padding: 12px 24px;
-            border-radius: 8px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            margin-right: 15px;
-            transition: all 0.3s;
-        }
-
-        .btn-find {
             background-color: var(--primary-blue);
             color: white;
             border: none;
+            padding: 12px 25px; 
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 15px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            box-shadow: 0 3px 8px rgba(0, 123, 255, 0.3);
+            transition: all 0.3s ease;
         }
 
-        .btn-post {
-            background: none;
-            border: 2px solid var(--primary-blue);
-            color: var(--primary-blue);
+        .btn-login:hover {
+            background-color: #006fe6;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0, 123, 255, 0.4);
         }
 
-        .btn-find:hover {
-            opacity: 0.9;
+        /* --- HERO SECTION HEIGHT ADJUSTMENT --- */
+        #hero {
+            /* Set the height to be the full viewport height minus the header's height.
+               Your header is roughly 73px tall, you can adjust this value if needed. */
+            min-height: calc(100vh - 73px);
+            
+            /* Remove old padding as we will now use flexbox for centering */
+            padding-top: 0;
+            padding-bottom: 0;
+
+            /* Use Flexbox to perfectly center the content vertically and horizontally */
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
-        .btn-post:hover {
-            background-color: var(--primary-blue);
-            color: white;
+        /* We need to ensure the container inside the hero section is also ready for flexbox */
+        #hero .container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
         }
 
-        .hero-image {
-             max-width: 550px;
+        .hero-gradient-text {
+            background: -webkit-linear-gradient(45deg, #3b82f6, #6366f1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
         
-        .hero-image img {
-            max-width: 100%;
-            height: auto;
+        /* Floating Elements Styling */
+        .floating-element {
+            position: absolute;
+            background-color: rgba(59, 130, 246, 0.1);
+            border-radius: 50%;
+            z-index: 0;
+            filter: blur(10px);
         }
-
-        /* How It Works Section */
-        .how-it-works-section {
-            background-color: var(--light-gray);
-            padding: 60px 0;
-        }
-
+        
+        /* General Section Header Styling */
         .header-section {
             text-align: center;
             margin-bottom: 50px;
@@ -194,6 +169,12 @@
             color: var(--light-text);
             max-width: 700px;
             margin: 0 auto;
+        }
+
+        /* How It Works Section */
+        .how-it-works-section {
+            background-color: var(--light-gray);
+            padding: 60px 0;
         }
 
         .timeline-container {
@@ -419,7 +400,7 @@
             background-color: rgba(0, 0, 0, 0.6);
         }
 
-        /* --- NEW: Interactive Map Section Styles --- */
+        /* --- Interactive Map Section Styles --- */
         .map-section {
             padding: 80px 0;
             background: #f8f9fc;
@@ -505,12 +486,6 @@
             color: #fb923c;
         }
 
-        .state-hover-effect {
-            transform: scale(1.02) !important;
-            transform-origin: center !important;
-            filter: drop-shadow(0 8px 16px rgba(251, 146, 60, 0.4)) !important;
-        }
-
         .leaflet-interactive {
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
             transform-origin: center !important;
@@ -520,24 +495,9 @@
             transform: scale(1.02) !important;
             filter: drop-shadow(0 8px 16px rgba(251, 146, 60, 0.3)) !important;
         }
-        /* --- END of Map Section Styles --- */
-
 
         /* Responsiveness */
         @media (max-width: 768px) {
-            .hero-section {
-                flex-direction: column-reverse;
-                text-align: center;
-                padding: 40px 20px;
-            }
-            .hero-image img {
-                max-width: 300px;
-                margin-bottom: 40px;
-            }
-            .hero-text h1 {
-                font-size: 36px;
-            }
-
             .timeline-svg-path {
                 display: none;
             }
@@ -587,17 +547,21 @@
     </header>
 
     <main>
-        <section class="hero-section container">
-            <div class="hero-text">
-                <h1>Your future starts here</h1>
-                <p>25,000+ Internships for freshers, students & graduates!</p>
-                <div class="hero-buttons">
-                    <button class="btn-find">Find Internships</button>
-                    <button class="btn-post">+ Post Internships</button>
-                </div>
-            </div>
-            <div class="hero-image">
-                <img src="https://d8it4huxumps7.cloudfront.net/uploads/images/676e5f765e786_internship_portal.png?d=1000x600" alt="Student with books">
+        <section id="hero" class="relative text-center overflow-hidden">
+            <div class="floating-element w-48 h-48 top-20 left-10"></div>
+            <div class="floating-element w-32 h-32 top-1/2 right-20"></div>
+            <div class="floating-element w-24 h-24 bottom-10 left-1/4"></div>
+
+            <div class="container mx-auto px-6 relative z-10">
+                <h1 class="text-5xl md:text-7xl font-extrabold text-gray-800 leading-tight">
+                    Find Your Perfect Internship with <span class="hero-gradient-text">AI Precision</span>
+                </h1>
+                <p class="mt-6 text-lg md:text-xl text-gray-600 max-w-3xl mx-auto">
+                    Stop searching, start matching. Lumo analyzes your resume to connect you with internship opportunities that align with your skills and career goals.
+                </p>
+                <button class="mt-10 bg-blue-600 text-white font-bold text-lg px-8 py-4 rounded-lg shadow-lg hover:bg-blue-700 transition transform hover:scale-105">
+                    Get Started for Free
+                </button>
             </div>
         </section>
 
@@ -702,8 +666,8 @@
                         </div>
                     </div>
                     <div class="carousel-controls">
-                        <button id="prevBtn" class="carousel-control-btn"><i class="fas fa-chevron-left"></i></button>
-                        <button id="nextBtn" class="carousel-control-btn"><i class="fas fa-chevron-right"></i></button>
+                        <button id="prevBtn" class="carousel-control-btn" aria-label="Previous Feature"><i class="fas fa-chevron-left"></i></button>
+                        <button id="nextBtn" class="carousel-control-btn" aria-label="Next Feature"><i class="fas fa-chevron-right"></i></button>
                     </div>
                 </div>
             </div>
@@ -833,7 +797,7 @@
                 }
             }
 
-            // --- NEW: Interactive Map Logic ---
+            // --- Interactive Map Logic ---
             var map = L.map('map', { zoomControl: false }).setView([22.0, 79.0], 5);
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                 attribution: '© OpenStreetMap contributors',
@@ -841,108 +805,62 @@
             }).addTo(map);
 
             var statesData = {
-                'Andhra Pradesh': { lat: 15.9129, lng: 79.7400, population: '49.4M', capital: 'Amaravati', area: '160,205 km²', literacy: '67.4%' },
-                'Arunachal Pradesh': { lat: 28.2180, lng: 94.7278, population: '1.4M', capital: 'Itanagar', area: '83,743 km²', literacy: '65.4%' },
-                'Assam': { lat: 26.2006, lng: 92.9376, population: '31.2M', capital: 'Dispur', area: '78,438 km²', literacy: '72.2%' },
-                'Bihar': { lat: 25.0961, lng: 85.3131, population: '104.1M', capital: 'Patna', area: '94,163 km²', literacy: '61.8%' },
-                'Chhattisgarh': { lat: 21.2787, lng: 81.8661, population: '25.5M', capital: 'Raipur', area: '135,192 km²', literacy: '70.3%' },
-                'Goa': { lat: 15.2993, lng: 74.1240, population: '1.5M', capital: 'Panaji', area: '3,702 km²', literacy: '88.7%' },
-                'Gujarat': { lat: 22.2587, lng: 71.1924, population: '60.4M', capital: 'Gandhinagar', area: '196,244 km²', literacy: '78.0%' },
-                'Haryana': { lat: 29.0588, lng: 76.0856, population: '25.4M', capital: 'Chandigarh', area: '44,212 km²', literacy: '75.6%' },
-                'Himachal Pradesh': { lat: 31.1048, lng: 77.1734, population: '6.9M', capital: 'Shimla', area: '55,673 km²', literacy: '82.8%' },
-                'Jharkhand': { lat: 23.6102, lng: 85.2799, population: '33.0M', capital: 'Ranchi', area: '79,716 km²', literacy: '66.4%' },
-                'Karnataka': { lat: 15.3173, lng: 75.7139, population: '61.1M', capital: 'Bengaluru', area: '191,791 km²', literacy: '75.4%' },
-                'Kerala': { lat: 10.8505, lng: 76.2711, population: '33.4M', capital: 'Thiruvananthapuram', area: '38,852 km²', literacy: '94.0%' },
-                'Madhya Pradesh': { lat: 22.9734, lng: 78.6569, population: '72.6M', capital: 'Bhopal', area: '308,245 km²', literacy: '69.3%' },
-                'Maharashtra': { lat: 19.7515, lng: 75.7139, population: '112.4M', capital: 'Mumbai', area: '307,713 km²', literacy: '82.3%' },
-                'Manipur': { lat: 24.6637, lng: 93.9063, population: '2.9M', capital: 'Imphal', area: '22,327 km²', literacy: '79.2%' },
-                'Meghalaya': { lat: 25.4670, lng: 91.3662, population: '3.0M', capital: 'Shillong', area: '22,429 km²', literacy: '74.4%' },
-                'Mizoram': { lat: 23.1645, lng: 92.9376, population: '1.1M', capital: 'Aizawl', area: '21,081 km²', literacy: '91.3%' },
-                'Nagaland': { lat: 26.1584, lng: 94.5624, population: '2.0M', capital: 'Kohima', area: '16,579 km²', literacy: '79.6%' },
-                'Odisha': { lat: 20.9517, lng: 85.0985, population: '42.0M', capital: 'Bhubaneswar', area: '155,707 km²', literacy: '72.9%' },
-                'Punjab': { lat: 31.1471, lng: 75.3412, population: '27.7M', capital: 'Chandigarh', area: '50,362 km²', literacy: '75.8%' },
-                'Rajasthan': { lat: 27.0238, lng: 74.2179, population: '68.5M', capital: 'Jaipur', area: '342,239 km²', literacy: '66.1%' },
-                'Sikkim': { lat: 27.5330, lng: 88.5122, population: '0.6M', capital: 'Gangtok', area: '7,096 km²', literacy: '81.4%' },
-                'Tamil Nadu': { lat: 11.1271, lng: 78.6569, population: '72.1M', capital: 'Chennai', area: '130,060 km²', literacy: '80.1%' },
-                'Telangana': { lat: 18.1124, lng: 79.0193, population: '35.0M', capital: 'Hyderabad', area: '112,077 km²', literacy: '66.5%' },
-                'Tripura': { lat: 23.9408, lng: 91.9882, population: '3.7M', capital: 'Agartala', area: '10,486 km²', literacy: '87.2%' },
-                'Uttar Pradesh': { lat: 26.8467, lng: 80.9462, population: '199.8M', capital: 'Lucknow', area: '240,928 km²', literacy: '67.7%' },
-                'Uttarakhand': { lat: 30.0668, lng: 79.0193, population: '10.1M', capital: 'Dehradun', area: '53,483 km²', literacy: '78.8%' },
-                'West Bengal': { lat: 22.9868, lng: 87.8550, population: '91.3M', capital: 'Kolkata', area: '88,752 km²', literacy: '76.3%' },
-                'Delhi': { lat: 28.7041, lng: 77.1025, population: '16.8M', capital: 'New Delhi', area: '1,484 km²', literacy: '86.3%' },
-                'Jammu and Kashmir': { lat: 34.0837, lng: 74.7973, population: '12.5M', capital: 'Srinagar', area: '55,673 km²', literacy: '68.7%' },
-                'Ladakh': { lat: 34.1526, lng: 77.5771, population: '0.3M', capital: 'Leh', area: '59,146 km²', literacy: '62.5%' }
+                'Andhra Pradesh': { lat: 15.9129, lng: 79.7400, capital: 'Amaravati' },
+                'Arunachal Pradesh': { lat: 28.2180, lng: 94.7278, capital: 'Itanagar' },
+                'Assam': { lat: 26.2006, lng: 92.9376, capital: 'Dispur' },
+                'Bihar': { lat: 25.0961, lng: 85.3131, capital: 'Patna' },
+                'Chhattisgarh': { lat: 21.2787, lng: 81.8661, capital: 'Raipur' },
+                'Goa': { lat: 15.2993, lng: 74.1240, capital: 'Panaji' },
+                'Gujarat': { lat: 22.2587, lng: 71.1924, capital: 'Gandhinagar' },
+                'Haryana': { lat: 29.0588, lng: 76.0856, capital: 'Chandigarh' },
+                'Himachal Pradesh': { lat: 31.1048, lng: 77.1734, capital: 'Shimla' },
+                'Jharkhand': { lat: 23.6102, lng: 85.2799, capital: 'Ranchi' },
+                'Karnataka': { lat: 15.3173, lng: 75.7139, capital: 'Bengaluru' },
+                'Kerala': { lat: 10.8505, lng: 76.2711, capital: 'Thiruvananthapuram' },
+                'Madhya Pradesh': { lat: 22.9734, lng: 78.6569, capital: 'Bhopal' },
+                'Maharashtra': { lat: 19.7515, lng: 75.7139, capital: 'Mumbai' },
+                'Manipur': { lat: 24.6637, lng: 93.9063, capital: 'Imphal' },
+                'Meghalaya': { lat: 25.4670, lng: 91.3662, capital: 'Shillong' },
+                'Mizoram': { lat: 23.1645, lng: 92.9376, capital: 'Aizawl' },
+                'Nagaland': { lat: 26.1584, lng: 94.5624, capital: 'Kohima' },
+                'Odisha': { lat: 20.9517, lng: 85.0985, capital: 'Bhubaneswar' },
+                'Punjab': { lat: 31.1471, lng: 75.3412, capital: 'Chandigarh' },
+                'Rajasthan': { lat: 27.0238, lng: 74.2179, capital: 'Jaipur' },
+                'Sikkim': { lat: 27.5330, lng: 88.5122, capital: 'Gangtok' },
+                'Tamil Nadu': { lat: 11.1271, lng: 78.6569, capital: 'Chennai' },
+                'Telangana': { lat: 18.1124, lng: 79.0193, capital: 'Hyderabad' },
+                'Tripura': { lat: 23.7451, lng: 91.7468, capital: 'Agartala' },
+                'Uttar Pradesh': { lat: 26.8467, lng: 80.9462, capital: 'Lucknow' },
+                'Uttarakhand': { lat: 30.0668, lng: 79.0193, capital: 'Dehradun' },
+                'West Bengal': { lat: 22.9868, lng: 87.8550, capital: 'Kolkata' },
+                'Andaman and Nicobar Islands': { lat: 11.7401, lng: 92.6586, capital: 'Port Blair' },
+                'Chandigarh': { lat: 30.7333, lng: 76.7794, capital: 'Chandigarh' },
+                'Dadra and Nagar Haveli and Daman and Diu': { lat: 20.1809, lng: 73.0169, capital: 'Daman' },
+                'Delhi': { lat: 28.7041, lng: 77.1025, capital: 'New Delhi' },
+                'Jammu and Kashmir': { lat: 33.7782, lng: 76.5762, capital: 'Srinagar/Jammu' },
+                'Ladakh': { lat: 34.1526, lng: 77.5771, capital: 'Leh' },
+                'Lakshadweep': { lat: 10.5667, lng: 72.6417, capital: 'Kavaratti' },
+                'Puducherry': { lat: 11.9416, lng: 79.8083, capital: 'Puducherry' }
             };
 
-            function createAnimatedDot(state, data) {
-                var circle = L.circleMarker([data.lat, data.lng], { radius: 8, fillColor: '#2563eb', color: '#ffffff', weight: 3, opacity: 1, fillOpacity: 0.8 });
-                var pulseInterval = setInterval(() => {
-                    if (map.hasLayer(circle)) {
-                        circle.setRadius(circle.getRadius() === 8 ? 12 : 8);
-                        circle.setStyle({ fillOpacity: circle.options.fillOpacity === 0.8 ? 0.5 : 0.8 });
-                    } else {
-                        clearInterval(pulseInterval);
-                    }
-                }, 1000);
-                circle.on('mouseover', function() {
-                    var tooltipContent = `<div class="tooltip-title">${state}</div><div><strong>Population:</strong> ${data.population}</div><div><strong>Capital:</strong> ${data.capital}</div><div><strong>Area:</strong> ${data.area}</div><div><strong>Literacy Rate:</strong> ${data.literacy}</div>`;
-                    circle.bindTooltip(tooltipContent, { permanent: false, direction: 'top', offset: [0, -15] }).openTooltip();
-                    circle.setStyle({ radius: 10, fillColor: '#1d4ed8', fillOpacity: 1 });
-                });
-                circle.on('mouseout', function() {
-                    circle.closeTooltip();
-                    circle.setStyle({ radius: 8, fillColor: '#2563eb', fillOpacity: 0.8 });
-                });
-                return circle;
+            // Loop through the states data and add markers to the map
+            for (const stateName in statesData) {
+                const state = statesData[stateName];
+                if (state.lat && state.lng) {
+                    const marker = L.marker([state.lat, state.lng]).addTo(map);
+
+                    const tooltipContent = `
+                        <div class="tooltip-title">${stateName}</div>
+                        <b>Capital:</b> ${state.capital}
+                    `;
+
+                    marker.bindTooltip(tooltipContent, {
+                        permanent: false,
+                        direction: 'top',
+                        offset: [0, -10]
+                    });
+                }
             }
-
-            Object.keys(statesData).forEach(function(state) {
-                var data = statesData[state];
-                createAnimatedDot(state, data).addTo(map);
-            });
-
-            var indiaStatesUrl = 'https://raw.githubusercontent.com/geohacker/india/master/state/india_telengana.geojson';
-            
-            function onEachStateFeature(feature, layer) {
-                layer.on({
-                    mouseover: function (e) {
-                        var layer = e.target;
-                        layer.setStyle({ weight: 4, color: '#fb923c', fillColor: '#fed7aa', fillOpacity: 0.8, dashArray: '' });
-                        if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) { layer.bringToFront(); }
-                        if (layer._path) { layer._path.classList.add('state-hover-effect'); }
-                        
-                        var stateName = feature.properties.st_nm;
-                        var data = statesData[stateName];
-                        if (data) {
-                            var tooltipContent = `<div class="tooltip-title">${stateName}</div><div><strong>Population:</strong> ${data.population}</div><div><strong>Capital:</strong> ${data.capital}</div><div><strong>Area:</strong> ${data.area}</div><div><strong>Literacy Rate:</strong> ${data.literacy}</div>`;
-                            layer.bindTooltip(tooltipContent, { permanent: false, direction: 'auto', offset: [0, -5] }).openTooltip();
-                        }
-                    },
-                    mouseout: function (e) {
-                        var layer = e.target;
-                        layer.setStyle({ color: '#000000', weight: 2, fillColor: 'transparent', fillOpacity: 0, dashArray: '' });
-                        if (layer._path) { layer._path.classList.remove('state-hover-effect'); }
-                        layer.closeTooltip();
-                    },
-                    click: function (e) {
-                        e.originalEvent.preventDefault();
-                    }
-                });
-            }
-            
-            fetch(indiaStatesUrl)
-                .then(res => res.json())
-                .then(data => {
-                    L.geoJSON(data, {
-                        style: { color: '#000000', weight: 2, fillColor: 'transparent', fillOpacity: 0 },
-                        onEachFeature: onEachStateFeature
-                    }).addTo(map);
-                })
-                .catch(err => console.log('Could not load state boundaries, but dots will still work'));
-
-            var indiaBounds = [[6, 68], [37, 97]];
-            map.setMaxBounds(indiaBounds);
-            map.on('drag', () => map.panInsideBounds(indiaBounds, { animate: false }));
         });
     </script>
 </body>
