@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Lumo AI - Google Interview Prep</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+    
+    * {
+      box-sizing: border-box;
+      transition: all 0.3s ease;
+    }
+    
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(to bottom, #e6f4ff 0%, #ffffff 100%);
+      min-height: 100vh;
+      margin: 0;
+      padding: 0;
+    }
+    
+    .lumo-card {
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 8px 32px rgba(0, 123, 255, 0.15);
+      border: 1px solid #e6f4ff;
+    }
+    
+    .btn-primary {
+      background: linear-gradient(90deg, #007bff 0%, #4da6ff 100%);
+      color: white;
+      border: none;
+      border-radius: 12px;
+      padding: 14px 28px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 14px rgba(0, 123, 255, 0.3);
+    }
+    
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0, 123, 255, 0.4);
+    }
+    
+    .company-tag {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      margin-right: 8px;
+      margin-bottom: 8px;
+    }
+    
+    .question-card {
+      background: #f8fbff;
+      border: 2px solid #e6f4ff;
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 16px;
+      transition: all 0.2s ease;
+    }
+    
+    .question-card:hover {
+      background: #e6f4ff;
+      transform: translateY(-2px);
+      border-color: #4da6ff;
+    }
+    
+    .nav-item {
+      padding: 12px 20px;
+      border-radius: 12px;
+      cursor: pointer;
+      margin-bottom: 8px;
+      font-weight: 500;
+    }
+    
+    .nav-item:hover {
+      background: #e6f4ff;
+    }
+    
+    .nav-item.active {
+      background: #007bff;
+      color: white;
+    }
+    
+    .fade-in {
+      animation: fadeIn 0.5s ease forwards;
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .text-blue-custom {
+      color: #007bff;
+    }
+    
+    .bg-blue-custom {
+      background-color: #007bff;
+    }
+    
+    .difficulty-easy {
+      color: #48bb78;
+    }
+    
+    .difficulty-medium {
+      color: #ed8936;
+    }
+    
+    .difficulty-hard {
+      color: #f56565;
+    }
+    
+    .google-bg {
+      background: linear-gradient(135deg, #4285F4 0%, #34A853 33%, #FBBC05 66%, #EA4335 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header class="bg-white shadow-sm">
+    <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+      <div class="flex items-center">
+        <div class="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center mr-3">
+          <i class="fas fa-brain text-xl text-blue-600"></i>
+        </div>
+        <h1 class="text-2xl font-bold text-blue-600">Lumo AI</h1>
+      </div>
+      <nav class="hidden md:flex space-x-8">
+        <a href="#" class="text-blue-600 font-medium">Dashboard</a>
+        <a href="#" class="text-gray-600 hover:text-blue-600">Interview Prep</a>
+        <a href="#" class="text-gray-600 hover:text-blue-600">Company Guides</a>
+        <a href="#" class="text-gray-600 hover:text-blue-600">Progress</a>
+      </nav>
+      <button class="px-4 py-2 bg-blue-100 text-blue-600 rounded-lg font-medium">Sign In</button>
+    </div>
+  </header>
+
+  <div class="container mx-auto px-4 py-8">
+    <!-- Company Header -->
+    <div class="lumo-card p-8 text-center mb-8">
+      <div class="flex justify-center items-center mb-6">
+        <div class="w-20 h-20 rounded-full bg-blue-100 flex items-center justify-center mr-6">
+          <i class="fab fa-google text-4xl google-bg"></i>
+        </div>
+        <div class="text-left">
+          <h1 class="text-4xl font-bold text-gray-800 mb-2">Google Interview Preparation</h1>
+          <p class="text-xl text-gray-600">Technical questions specifically asked at Google interviews</p>
+        </div>
+      </div>
+      
+      <div class="flex flex-wrap justify-center gap-6 mb-8">
+        <div class="flex items-center">
+          <div class="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center mr-3">
+            <span class="text-blue-600 font-bold">24</span>
+          </div>
+          <span class="text-gray-700">Technical Questions</span>
+        </div>
+        <div class="flex items-center">
+          <div class="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center mr-3">
+            <i class="fas fa-clock text-green-600"></i>
+          </div>
+          <span class="text-gray-700">Avg. 4.5 min/question</span>
+        </div>
+        <div class="flex items-center">
+          <div class="w-10 h-10 rounded-full bg-purple-100 flex items-center justify-center mr-3">
+            <i class="fas fa-star text-purple-600"></i>
+          </div>
+          <span class="text-gray-700">Difficulty: 4.2/5</span>
+        </div>
+      </div>
+      
+      <div class="flex flex-col sm:flex-row justify-center gap-4">
+        <button class="btn-primary text-lg px-8 py-4">
+          <i class="fas fa-play-circle mr-2"></i>Start Practice Session
+        </button>
+        <button class="px-6 py-4 border border-blue-600 text-blue-600 rounded-xl font-medium hover:bg-blue-50">
+          <i class="fas fa-bookmark mr-2"></i>Save for Later
+        </button>
+      </div>
+    </div>
+
+    <div class="flex flex-col lg:flex-row gap-8">
+      <!-- Sidebar -->
+      <div class="lg:w-1/4">
+        <div class="lumo-card p-6 mb-6">
+          <h2 class="text-xl font-bold text-gray-800 mb-4">Google Interview</h2>
+          
+          <div class="mb-6">
+            <h3 class="font-medium text-gray-700 mb-3">Process Overview</h3>
+            <ul class="space-y-2 text-sm text-gray-600">
+              <li class="flex items-start">
+                <span class="w-6 h-6 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center text-xs font-bold mr-2">1</span>
+                <span>Recruiter Screening Call</span>
+              </li>
+              <li class="flex items-start">
+                <span class="w-6 h-6 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center text-xs font-bold mr-2">2</span>
+                <span>Technical Phone Screen (1-2 rounds)</span>
+              </li>
+              <li class="flex items-start">
+                <span class="w-6 h-6 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center text-xs font-bold mr-2">3</span>
+                <span>Onsite Interviews (4-5 rounds)</span>
+              </li>
+              <li class="flex items-start">
+                <span class="w-6 h-6 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center text-xs font-bold mr-2">4</span>
+                <span>Hiring Committee Review</span>
+              </li>
+            </ul>
+          </div>
+          
+          <div class="mb-6">
+            <h3 class="font-medium text-gray-700 mb-3">Focus Areas</h3>
+            <div class="space-y-2">
+              <div class="flex items-center">
+                <div class="w-3 h-3 rounded-full bg-blue-500 mr-2"></div>
+                <span class="text-gray-600">Algorithms</span>
+              </div>
+              <div class="flex items-center">
+                <div class="w-3 h-3 rounded-full bg-blue-500 mr-2"></div>
+                <span class="text-gray-600">Data Structures</span>
+              </div>
+              <div class="flex items-center">
+                <div class="w-3 h-3 rounded-full bg-blue-500 mr-2"></div>
+                <span class="text-gray-600">System Design</span>
+              </div>
+              <div class="flex items-center">
+                <div class="w-3 h-3 rounded-full bg-blue-500 mr-2"></div>
+                <span class="text-gray-600">Problem Solving</span>
+              </div>
+            </div>
+          </div>
+          
+          <div>
+            <h3 class="font-medium text-gray-700 mb-3">Tips for Success</h3>
+            <ul class="space-y-2 text-sm text-gray-600">
+              <li class="flex items-start">
+                <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                <span>Practice thinking out loud</span>
+              </li>
+              <li class="flex items-start">
+                <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                <span>Consider time & space complexity</span>
+              </li>
+              <li class="flex items-start">
+                <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                <span>Test your solution with edge cases</span>
+              </li>
+              <li class="flex items-start">
+                <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                <span>Ask clarifying questions</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+        
+        <div class="lumo-card p-6">
+          <h2 class="text-xl font-bold text-gray-800 mb-4">Your Progress</h2>
+          <div class="flex items-center justify-between mb-4">
+            <span class="text-gray-700">Google Questions Solved</span>
+            <span class="font-medium text-blue-600">8/24</span>
+          </div>
+          <div class="w-full bg-gray-200 rounded-full h-2 mb-6">
+            <div class="bg-blue-600 h-2 rounded-full" style="width: 33%"></div>
+          </div>
+          
+          <div class="flex items-center justify-between mb-4">
+            <span class="text-gray-700">Accuracy</span>
+            <span class="font-medium text-blue-600">75%</span>
+          </div>
+          <div class="w-full bg-gray-200 rounded-full h-2 mb-6">
+            <div class="bg-green-500 h-2 rounded-full" style="width: 75%"></div>
+          </div>
+          
+          <div class="flex items-center justify-between mb-4">
+            <span class="text-gray-700">Avg. Time per Question</span>
+            <span class="font-medium text-blue-600">4.2 min</span>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Main Content -->
+      <div class="lg:w-3/4">
+        <div class="lumo-card p-6 mb-6">
+          <div class="flex justify-between items-center mb-6">
+            <h2 class="text-2xl font-bold text-gray-800">Google Technical Questions</h2>
+            <div class="flex items-center">
+              <span class="text-gray-600 mr-3">Filter by:</span>
+              <select class="border border-gray-300 rounded-lg px-3 py-2">
+                <option>All Difficulties</option>
+                <option>Easy</option>
+                <option>Medium</option>
+                <option>Hard</option>
+              </select>
+            </div>
+          </div>
+          
+          <div class="grid grid-cols-1 gap-6">
+            <!-- Question 1 -->
+            <div class="question-card">
+              <div class="flex justify-between items-start mb-3">
+                <h3 class="text-lg font-semibold text-gray-800">Implement a LRU Cache</h3>
+                <span class="difficulty-medium">Medium</span>
+              </div>
+              <div class="mb-4">
+                <span class="company-tag bg-blue-100 text-blue-700">Google</span>
+                <span class="company-tag bg-blue-100 text-blue-700">System Design</span>
+                <span class="company-tag bg-blue-100 text-blue-700">Data Structures</span>
+              </div>
+              <p class="text-gray-600 mb-4">Design and implement a data structure for Least Recently Used (LRU) cache. It should support get and put operations.</p>
+              <div class="flex justify-between items-center">
+                <div class="flex items-center text-gray-500">
+                  <i class="far fa-clock mr-1"></i>
+                  <span>Recommended time: 25 min</span>
+                </div>
+                <button class="text-blue-600 font-medium flex items-center">
+                  Solve Problem <i class="fas fa-arrow-right ml-2 text-sm"></i>
+                </button>
+              </div>
+            </div>
+            
+            <!-- Question 2 -->
+            <div class="question-card">
+              <div class="flex justify-between items-start mb-3">
+                <h3 class="text-lg font-semibold text-gray-800">Number of Islands</h3>
+                <span class="difficulty-medium">Medium</span>
+              </div>
+              <div class="mb-4">
+                <span class="company-tag bg-blue-100 text-blue-700">Google</span>
+                <span class="company-tag bg-blue-100 text-blue-700">Graph</span>
+                <span class="company-tag bg-blue-100 text-blue-700">DFS</span>
+              </div>
+              <p class="text-gray-600 mb-4">Given a 2D grid map of '1's (land) and '0's (water), count the number of islands. An island is surrounded by water.</p>
+              <div class="flex justify-between items-center">
+                <div class="flex items-center text-gray-500">
+                  <i class="far fa-clock mr-1"></i>
+                  <span>Recommended time: 25 min</span>
+                </div>
+                <button class="text-blue-600 font-medium flex items-center">
+                  Solve Problem <i class="fas fa-arrow-right ml-2 text-sm"></i>
+                </button>
+              </div>
+            </div>
+            
+            <!-- Question 3 -->
+            <div class="question-card">
+              <div class="flex justify-between items-start mb-3">
+                <h3 class="text-lg font-semibold text-gray-800">Merge Intervals</h3>
+                <span class="difficulty-medium">Medium</span>
+              </div>
+              <div class="mb-4">
+                <span class="company-tag bg-blue-100 text-blue-700">Google</span>
+                <span class="company-tag bg-blue-100 text-blue-700">Arrays</span>
+                <span class="company-tag bg-blue-100 text-blue-700">Sorting</span>
+              </div>
+              <p class="text-gray-600 mb-4">Given an array of intervals where intervals[i] = [starti, endi], merge all overlapping intervals.</p>
+              <div class="flex justify-between items-center">
+                <div class="flex items-center text-gray-500">
+                  <i class="far fa-clock mr-1"></i>
+                  <span>Recommended time: 20 min</span>
+                </div>
+                <button class="text-blue-600 font-medium flex items-center">
+                  Solve Problem <i class="fas fa-arrow-right ml-2 text-sm"></i>
+                </button>
+              </div>
+            </div>
+            
+            <!-- Question 4 -->
+            <div class="question-card">
+              <div class="flex justify-between items-start mb-3">
+                <h3 class="text-lg font-semibold text-gray-800">Word Break</h3>
+                <span class="difficulty-medium">Medium</span>
+              </div>
+              <div class="mb-4">
+                <span class="company-tag bg-blue-100 text-blue-700">Google</span>
+                <span class="company-tag bg-blue-100 text-blue-700">Dynamic Programming</span>
+                <span class="company-tag bg-blue-100 text-blue-700">String</span>
+              </div>
+              <p class="text-gray-600 mb-4">Given a string s and a dictionary of strings wordDict, return true if s can be segmented into a space-separated sequence.</p>
+              <div class="flex justify-between items-center">
+                <div class="flex items-center text-gray-500">
+                  <i class="far fa-clock mr-1"></i>
+                  <span>Recommended time: 25 min</span>
+                </div>
+                <button class="text-blue-600 font-medium flex items-center">
+                  Solve Problem <i class="fas fa-arrow-right ml-2 text-sm"></i>
+                </button>
+              </div>
+            </div>
+            
+            <!-- Question 5 -->
+            <div class="question-card">
+              <div class="flex justify-between items-start mb-3">
+                <h3 class="text-lg font-semibold text-gray-800">Course Schedule</h3>
+                <span class="difficulty-medium">Medium</span>
+              </div>
+              <div class="mb-4">
+                <span class="company-tag bg-blue-100 text-blue-700">Google</span>
+                <span class="company-tag bg-blue-100 text-blue-700">Graph</span>
+                <span class="company-tag bg-blue-100 text-blue-700">Topological Sort</span>
+              </div>
+              <p class="text-gray-600 mb-4">There are a total of numCourses courses you have to take, labeled from 0 to numCourses - 1.</p>
+              <div class="flex justify-between items-center">
+                <div class="flex items-center text-gray-500">
+                  <i class="far fa-clock mr-1"></i>
+                  <span>Recommended time: 25 min</span>
+                </div>
+                <button class="text-blue-600 font-medium flex items-center">
+                  Solve Problem <i class="fas fa-arrow-right ml-2 text-sm"></i>
+                </button>
+              </div>
+            </div>
+            
+            <!-- Question 6 -->
+            <div class="question-card">
+              <div class="flex justify-between items-start mb-3">
+                <h3 class="text-lg font-semibold text-gray-800">Trapping Rain Water</h3>
+                <span class="difficulty-hard">Hard</span>
+              </div>
+              <div class="mb-4">
+                <span class="company-tag bg-blue-100 text-blue-700">Google</span>
+                <span class="company-tag bg-blue-100 text-blue-700">Arrays</span>
+                <span class="company-tag bg-blue-100 text-blue-700">Two Pointers</span>
+              </div>
+              <p class="text-gray-600 mb-4">Given n non-negative integers representing an elevation map where the width of each bar is 1.</p>
+              <div class="flex justify-between items-center">
+                <div class="flex items-center text-gray-500">
+                  <i class="far fa-clock mr-1"></i>
+                  <span>Recommended time: 30 min</span>
+                </div>
+                <button class="text-blue-600 font-medium flex items-center">
+                  Solve Problem <i class="fas fa-arrow-right ml-2 text-sm"></i>
+                </button>
+              </div>
+            </div>
+            
+            <!-- Question 7 -->
+            <div class="question-card">
+              <div class="flex justify-between items-start mb-3">
+                <h3 class="text-lg font-semibold text-gray-800">Design Search Autocomplete System</h3>
+                <span class="difficulty-hard">Hard</span>
+              </div>
+              <div class="mb-4">
+                <span class="company-tag bg-blue-100 text-blue-700">Google</span>
+                <span class="company-tag bg-blue-100 text-blue-700">System Design</span>
+                <span class="company-tag bg-blue-100 text-blue-700">Trie</span>
+              </div>
+              <p class="text-gray-600 mb-4">Design a search autocomplete system for a search engine. Users may input a sentence.</p>
+              <div class="flex justify-between items-center">
+                <div class="flex items-center text-gray-500">
+                  <i class="far fa-clock mr-1"></i>
+                  <span>Recommended time: 35 min</span>
+                </div>
+                <button class="text-blue-600 font-medium flex items-center">
+                  Solve Problem <i class="fas fa-arrow-right ml-2 text-sm"></i>
+                </button>
+              </div>
+            </div>
+            
+            <!-- Question 8 -->
+            <div class="question-card">
+              <div class="flex justify-between items-start mb-3">
+                <h3 class="text-lg font-semibold text-gray-800">Reverse Nodes in k-Group</h3>
+                <span class="difficulty-hard">Hard</span>
+              </div>
+              <div class="mb-4">
+                <span class="company-tag bg-blue-100 text-blue-700">Google</span>
+                <span class="company-tag bg-blue-100 text-blue-700">Linked List</span>
+                <span class="company-tag bg-blue-100 text-blue-700">Recursion</span>
+              </div>
+              <p class="text-gray-600 mb-4">Given the head of a linked list, reverse the nodes of the list k at a time, and return the modified list.</p>
+              <div class="flex justify-between items-center">
+                <div class="flex items-center text-gray-500">
+                  <i class="far fa-clock mr-1"></i>
+                  <span>Recommended time: 30 min</span>
+                </div>
+                <button class="text-blue-600 font-medium flex items-center">
+                  Solve Problem <i class="fas fa-arrow-right ml-2 text-sm"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+          
+          <div class="mt-8 flex justify-center">
+            <button class="px-6 py-3 border border-blue-600 text-blue-600 rounded-lg font-medium hover:bg-blue-50">
+              Load More Google Questions
+            </button>
+          </div>
+        </div>
+        
+        <div class="lumo-card p-6">
+          <h2 class="text-2xl font-bold text-gray-800 mb-6">Google Interview Guide</h2>
+          <div class="grid grid-cols-1 gap-6">
+            <div class="bg-blue-50 p-6 rounded-xl border border-blue-100">
+              <h3 class="text-xl font-bold text-gray-800 mb-4">Google's Interview Process</h3>
+              <p class="text-gray-600 mb-4">Google's interview process typically consists of the following stages:</p>
+              <ol class="list-decimal pl-5 text-gray-600 space-y-2">
+                <li><span class="font-medium">Recruiter Screening:</span> A brief call with a recruiter to discuss your background and interest in Google.</li>
+                <li><span class="font-medium">Technical Phone Screen:</span> One or two 45-minute technical interviews focusing on algorithms and data structures.</li>
+                <li><span class="font-medium">Onsite Interviews:</span> 4-5 interviews covering coding, system design, and behavioral questions.</li>
+                <li><span class="font-medium">Hiring Committee Review:</span> Your packet is reviewed by a committee who makes the final decision.</li>
+              </ol>
+            </div>
+            
+            <div class="bg-green-50 p-6 rounded-xl border border-green-100">
+              <h3 class="text-xl font-bold text-gray-800 mb-4">What Google Looks For</h3>
+              <ul class="text-gray-600 space-y-2">
+                <li class="flex items-start">
+                  <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                  <span><span class="font-medium">Technical Proficiency:</span> Strong coding skills in one programming language</span>
+                </li>
+                <li class="flex items-start">
+                  <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                  <span><span class="font-medium">Problem-Solving Ability:</span> Approach problems systematically and optimize solutions</span>
+                </li>
+                <li class="flex items-start">
+                  <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                  <span><span class="font-medium">Culture Fit:</span> Alignment with Google's values and collaborative spirit</span>
+                </li>
+                <li class="flex items-start">
+                  <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                  <span><span class="font-medium">Communication Skills:</span> Ability to explain your thought process clearly</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="bg-white mt-16 py-8 border-t border-gray-200">
+    <div class="container mx-auto px-4">
+      <div class="flex flex-col md:flex-row justify-between items-center">
+        <div class="flex items-center mb-6 md:mb-0">
+          <div class="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center mr-3">
+            <i class="fas fa-brain text-blue-600"></i>
+          </div>
+          <span class="text-xl font-bold text-blue-600">Lumo AI</span>
+        </div>
+        <div class="flex space-x-6">
+          <a href="#" class="text-gray-600 hover:text-blue-600">About</a>
+          <a href="#" class="text-gray-600 hover:text-blue-600">Features</a>
+          <a href="#" class="text-gray-600 hover:text-blue-600">Pricing</a>
+          <a href="#" class="text-gray-600 hover:text-blue-600">Contact</a>
+        </div>
+        <div class="flex space-x-4 mt-6 md:mt-0">
+          <a href="#" class="text-gray-400 hover:text-blue-600"><i class="fab fa-twitter text-lg"></i></a>
+          <a href="#" class="text-gray-400 hover:text-blue-600"><i class="fab fa-linkedin text-lg"></i></a>
+          <a href="#" class="text-gray-400 hover:text-blue-600"><i class="fab fa-github text-lg"></i></a>
+        </div>
+      </div>
+      <div class="text-center text-gray-500 text-sm mt-8">
+        © 2023 Lumo AI. All rights reserved.
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
